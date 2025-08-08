@@ -342,5 +342,20 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="{{ asset('js/input_image.js') }}"></script>
     <script src="{{ asset('js/mascara.js') }}"></script>
+    {{-- Script que imprime a página quando alguém clica no botão do index --}}
+    <script>
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        window.onload = function() {
+            if (getQueryParam('print') === '1') {
+            window.print();
+            }
+        };
+    </script>
+
+
 </x-app-layout>
         
