@@ -265,7 +265,7 @@ class OrdemDeServicoController extends Controller
         'cliente'  => 'required',
         'servico'  => 'required',
         'end'  => 'nullable',
-        'fone' => 'nullable',
+        'fone' => 'required',
         'valor' => 'required',
         'pago' => 'required|in:sim,nao,50%',
         'falta' => 'nullable|string',
@@ -357,7 +357,7 @@ class OrdemDeServicoController extends Controller
             'cliente'  => 'required',
             'servico'  => 'required',
             'end'  => 'nullable',
-            'fone' => 'nullable',
+            'fone' => 'required',
             'valor' => 'required',
             'pago' => 'required|in:sim,nao,50%',
             'falta' => 'nullable|string',
@@ -376,7 +376,7 @@ class OrdemDeServicoController extends Controller
             'observacoes_layout' => 'nullable|string',
             'nome_funcionario' => 'required',
         ]);
-     
+
         // Defina $layoutFile como null por padrão
         $layoutFile = null;
     
@@ -395,7 +395,7 @@ class OrdemDeServicoController extends Controller
         // Redirecionar com mensagem de sucesso ou erro
         if ($data) {
             session()->flash('success', 'Pedido adicionado com sucesso');
-            return redirect(route('adminOrdemDeServico.index'));
+            return redirect(route('adminOrdemDeServico.show', $data->id));
         } else {
             session()->flash('error', 'Algum problema ocorreu');
             return redirect(route('admin.OrdemDeServico.create'));
@@ -403,5 +403,3 @@ class OrdemDeServicoController extends Controller
     }
     
 }
-
-   

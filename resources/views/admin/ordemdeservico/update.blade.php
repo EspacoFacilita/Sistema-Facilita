@@ -113,7 +113,7 @@
                                 <div class="row mb-3">
                                     <div class="col d-flex justify-content-between align-items-center" x-data="{ telefone : ' ' }">
                                         <label class="  mx-2"for="">Fone:</label>
-                                        <input type="text" name="fone" class="form-control " id="fone" placeholder="Fone" x-mask="(99) 99999-9999" value="{{$ordemServico->fone}}">
+                                        <input type="text" name="fone" class="form-control " id="fone" placeholder="Fone" x-mask="(99) 99999-9999" value="{{$ordemServico->fone}}" required>
                                         @error('fone')
                                             <span class="text-danger">{{$message}}</span>
                                         @enderror

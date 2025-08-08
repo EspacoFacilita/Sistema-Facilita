@@ -64,7 +64,7 @@
                                     @enderror
                                 </div>
                                 <div class=" form-floating ml-4">
-                                    <input type="text" name="ORC_venda" class="form-control floatingInput" id="ORC_venda" placeholder="ORC de venda" value="{{old('ORC_venda')}}">
+                                    <input type="text" name="ORC_venda" class="form-control floatingInput" id="ORC_venda" placeholder="ORC de venda" value="{{old('ORC_venda')}}" >
                                     <label class="  ms-3"for="floatingInput">ORC DE VENDA</label>
                                     @error('ORC_venda')
                                         <span class="text-danger">{{$message}}</span>
@@ -102,7 +102,7 @@
                                 <div class="row mb-3">
                                     <div class="col d-flex justify-content-between align-items-center" x-data="{ telefone : ' ' }">
                                         <label class="  mx-2"for="">Fone:</label>
-                                        <input type="text" name="fone" class="form-control " id="fone" placeholder="Fone" x-mask="(99) 99999-9999" value="{{old('fone')}}" >
+                                        <input type="text" name="fone" class="form-control " id="fone" placeholder="Fone" x-mask="(99) 99999-9999" value="{{old('fone')}}" required >
                                         @error('fone')
                                             <span class="text-danger">{{$message}}</span>
                                         @enderror
