@@ -138,7 +138,7 @@
                                 </div>
                             </div>
                         </div>              
-                        <div class=" p-0 flex-wrap col-6 form-floating d-flex d-flex justify-content-evenly flex-wrap">
+                        <div class=" p-0 flex-wrap col-6 form-floating d-flex d-flex justify-content-evenly">
                             <div class="col-12 row d-flex justify-content-evenly border border-success border-bottom-0 ">
                                 <h5 class="col-12 d-flex justify-content-center text-bg-success align-items-center">PRAZO DA IMPRESSÃO</h5>
                                 <div class="row mb-3 col-6 align-items-center">
