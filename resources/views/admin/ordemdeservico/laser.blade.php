@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Pagina das Ordens Para o Laser') }}
+            {{ __('Pagina das Ordens Para Laser') }}
         </h2>
     </x-slot>
     <div class="py-12">
@@ -66,7 +66,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td class="text-center" colspan="6">Nenhuma Ordem Encontrada</td>
+                                    <td class="text-center" colspan="7">Nenhuma Ordem Encontrada</td>
                                 </tr>
                             @endforelse
                         </tbody>

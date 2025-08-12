@@ -10,7 +10,7 @@
                     </a>
                 </div>
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex bg-danger text-white rounded">
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex bg-danger text-white rounded    ">
                     <x-nav-link :href="route('adminOrdemDeServico.index')" :active="request()->routeIs('adminOrdemDeServico.index')"  class="text-white  text-decoration-none"> 
                         {{ __('Ordens De Serviço') }}
                     </x-nav-link>

@@ -10,7 +10,7 @@
                 <div class="p-6 text-gray-900 ">
                     <div class="">
                         <div class="d-flex align-items-center col mb-3">
-                            <h1 class="m-0 me-auto p-2 col-6">Lista de Ordens Entregues</h1>
+                            <h1 class="mb-0 me-auto col-6">Lista de Ordens Entregues</h1>
                             <div class="p-2 d-flex flex-row col-6">
                                 <form action="{{ route('adminOrdemDeServico.service-orders.delete-old') }}" method="POST" onsubmit="return confirm('Tem certeza que deseja deletar todas as ordens de serviço entregues há mais de 6 meses?')">
                                     @csrf
@@ -60,7 +60,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td class="text-center" colspan="6">Nenhuma ordem entregue encontrada</td>
+                                    <td class="text-center" colspan="7">Nenhuma ordem entregue encontrada</td>
                                 </tr>
                             @endforelse
                         </tbody>

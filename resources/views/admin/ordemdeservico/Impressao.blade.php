@@ -18,7 +18,7 @@
                             {{ Session::get('success') }}
                         </div>
                     @endif
-                    <table class="table table-hover">
+                    <table class="table table-hover text-center">
                         <thead class="table-primary">
                             <tr>
                                 <th>CÓD.Arte</th>
@@ -66,7 +66,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td class="text-center" colspan="6">Nenhuma Ordem Encontrada</td>
+                                    <td class="text-center" colspan="7">Nenhuma Ordem Encontrada</td>
                                 </tr>
                             @endforelse
                         </tbody>

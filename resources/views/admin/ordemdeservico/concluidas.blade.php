@@ -62,7 +62,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td class="text-center" colspan="6">Nenhuma ordem entregue encontrada</td>
+                                    <td class="text-center" colspan="7">Nenhuma ordem entregue encontrada</td>
                                 </tr>
                             @endforelse
                         </tbody>

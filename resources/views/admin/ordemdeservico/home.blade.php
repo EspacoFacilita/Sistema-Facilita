@@ -101,7 +101,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td class="text-center" colspan="6">Nenhuma Ordem Encontrada</td>
+                                    <td class="text-center" colspan="7">Nenhuma Ordem Encontrada</td>
                                 </tr>
                             @endforelse
                         </tbody>

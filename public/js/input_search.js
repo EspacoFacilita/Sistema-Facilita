@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const tbody = document.querySelector('table tbody');
                     tbody.innerHTML = ''; // Limpa a tabela
                     if (data.data.length === 0) {
-                        tbody.innerHTML = '<tr><td class="text-center" colspan="6">Nenhuma Ordem Encontrada</td></tr>';
+                        tbody.innerHTML = '<tr><td class="text-center" colspan="7">Nenhuma Ordem Encontrada</td></tr>';
                         return;
                     }
                     data.data.forEach(ordem => {

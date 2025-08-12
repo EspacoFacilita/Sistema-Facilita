@@ -9,9 +9,11 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <div class="d-flex align-items-center justify-content-between">
-                        <h1 class="mb-0">Lista dos Funcionário</h1>
-                        <input type="text" id="search-funcionario" placeholder="Buscar Funcionário..." class="form-control w-25" />
-                        <a href="{{ route('register') }}" class="btn btn-primary">Cadastrar Funcionário</a>
+                        <h1 class="mb-0">Lista dos Funcionários</h1>
+                        <div class="flex column">
+                            <input type="text" id="search-funcionario" placeholder="Buscar Funcionário..." class="form-control w-25" />
+                            <a href="{{ route('register') }}" class="btn btn-primary">Cadastrar Funcionário</a>
+                        </div>
                     </div>
                     <hr/>
                     @if (Session::has('success'))
