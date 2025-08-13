@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             
                             
                             <td class="align-middle">
-                                <div class="d-flex flex-column align-items-start">
+                                <div class="d-flex flex-column align-items-center">
                                     <span class="px-3 py-2 rounded ${getStatusClass(
                                         ordem.status
                                     )} text-center w-28">
@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                     }
                                 </div>
                             </td>
-                            <td class="align-middle">
+                            <td class="align-middle text-center">
                                 <div class="btn-group" role="group">
                                 <span class="mr-2 text-center">
                                     <a href="/admin/ordemdeservico${
