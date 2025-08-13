@@ -22,7 +22,7 @@
                     <table class="table table-hover">
                         <thead class="table-primary">
                             <tr class="text-center">
-                                <th class="align-middle">CÓD.Arte</th>
+                                <th class="px-4 align-middle">CÓD.Arte</th>
                                 <th class="align-middle">Cliente</th>
                                 <th class="align-middle">Serviços</th>
                                 <th class="align-middle">Funcionário</th>
@@ -36,12 +36,14 @@
                                 <tr>
                                     <td class="align-middle text-center">{{ $ordemdeservico->id }}</td>
                                     <td class="align-middle text-center">{{ $ordemdeservico->cliente }}</td>
-                                    <td class="align-middle">{{ $ordemdeservico->servico }}</td>
+                                    <td class="align-middle text-center" style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ $ordemdeservico->servico }}</td>
                                     <td class="align-middle text-center">{{ $ordemdeservico->nome_funcionario }}</td>
                                     <td class="align-middle text-center">
                                     {{ date('d/m/Y', strtotime($ordemdeservico->data_de_entrega)) }} 
                                     {{ $ordemdeservico->hora_de_entrega }}
                                     </td>
+
+                                    
                                     <td class="align-middle">
                                         <div class="d-flex flex-column align-items-start">
                                             @php
