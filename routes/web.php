@@ -5,6 +5,7 @@ use App\Http\Controllers\OrdemDeServicoController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\FuncionarioController;
 use App\Http\Controllers\RegisteredUserController;
+use App\Http\Controllers\CalendarioController;
 
 Route::middleware(['auth', 'verified'])->group(function () {
     // Rota de busca única para ordens de serviço
@@ -16,6 +17,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/admin/ordemdeservico', [OrdemDeServicoController::class, 'index'])->name('adminOrdemDeServico.index');
     Route::get('/admin/ordemdeservico/Impressao', [OrdemDeServicoController::class, 'Impressao'])->name('adminOrdemDeServico.Impressao');
     Route::get('/admin/ordemdeservico/producao', [OrdemDeServicoController::class, 'producao'])->name('adminOrdemDeServico.producao');
+    
+    // calendario
+    Route::get('/admin/ordemdeservico/producao/calendario', [CalendarioController::class, 'getCalendario'])->name('adminOrdemDeServico.calendario');
+    Route::get('/admin/ordemdeservico/producao/calendario/events', [CalendarioController::class, 'getEvents'])
+    ->name('adminOrdemDeServico.calendario.events');
+    
     Route::get('/admin/ordemdeservico/entregues', [OrdemDeServicoController::class, 'entregues'])->name('adminOrdemDeServico.entregues');
     Route::get('/admin/ordemdeservico/concluidas', [OrdemDeServicoController::class, 'concluidas'])->name('adminOrdemDeServico.concluidas');
     Route::get('/admin/ordemdeservico/laser', [OrdemDeServicoController::class, 'laser'])->name('adminOrdemDeServico.laser');
