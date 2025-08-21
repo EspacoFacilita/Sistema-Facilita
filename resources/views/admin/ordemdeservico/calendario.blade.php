@@ -59,6 +59,10 @@
             text-decoration: none;
             cursor: default;
         }
+
+        .fc-event {
+            margin-left: '3px';
+        }
     </style>
 
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">
@@ -119,27 +123,32 @@
                 },
 
                 eventDidMount: function(info) {
+                    let el = info.el;
+                    let bgColor = info.event.backgroundColor || '#3788d8';
+
                     if (info.view.type === 'dayGridMonth') {
-                        let titleEl = info.el.querySelector('.fc-event-title');
-                        let timeEl = info.el.querySelector('.fc-event-time');
+                        // Fundo colorido e texto branco
+                        el.style.backgroundColor = bgColor;
+                        el.style.color = 'white';
+                        el.style.border = '1px';
 
-                        let cor = info.event.backgroundColor;
-                        if (titleEl) titleEl.style.color = cor;
-                        if (timeEl) timeEl.style.color = cor;
-
-                        let dot = info.el.querySelector('.fc-event-dot');
+                        let dot = info.el.querySelector('.fc-daygrid-event-dot');
                         if (dot) dot.style.display = 'none';
                     }
 
                     if (info.view.type === 'listWeek') {
+                        // Mantém bolinha azul ou laranja
+                        let dot = el.querySelector('.fc-event-dot');
+                        if (dot) dot.style.display = 'inline-block';
+
+                        // Pode adicionar banner se quiser
                         let banner = document.createElement('div');
-                        banner.style.width = '10rem'; // largura menor, ajustável
-                        banner.style.height = '80%'; // ocupa toda a altura do evento
-                        banner.style.backgroundColor = info.event.backgroundColor || '#3788d8';
+                        banner.style.width = '10rem';
+                        banner.style.height = '80%';
+                        banner.style.backgroundColor = bgColor;
                         banner.style.marginTop = '0.3125rem';
                         banner.style.borderTopLeftRadius = '0.6rem';
                         banner.style.borderBottomLeftRadius = '0.6rem';
-
                         banner.style.cursor = 'pointer';
 
                         banner.onclick = function(e) {
@@ -161,23 +170,17 @@
                                 })
                                 .then(res => res.json())
                                 .then(response => {
-                                    if (response.success) {
-                                        calendar.refetchEvents();
-                                    }
+                                    if (response.success) calendar.refetchEvents();
                                 })
-                                .catch(() => {
-                                    alert('Erro ao atualizar a cor do evento.');
-                                });
+                                .catch(() => alert('Erro ao atualizar a cor do evento.'));
                         };
 
-                        // Posiciona à direita, ocupando toda altura
-                        info.el.style.position = 'relative';
+                        el.style.position = 'relative';
                         banner.style.position = 'absolute';
                         banner.style.right = '0';
                         banner.style.top = '0';
-                        info.el.appendChild(banner);
+                        el.appendChild(banner);
                     }
-
                 }
             });
 
