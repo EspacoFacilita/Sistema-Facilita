@@ -12,24 +12,60 @@ class CalendarioController extends Controller
         return view('admin.ordemdeservico.calendario');
     }
 
-    public function getEvents()
+        public function getEvents()
     {
-        $ordemdeservicos = OrdemDeServico::where('servico_externo', true)
-    ->where('status', 'Produção')
-    ->get();
+        $ordens = OrdemDeServico::where('status', 'Produção')
+            ->orderBy('data_de_recebimento', 'asc')
+            ->get();
 
+        $events = collect();
 
-        $events = $ordemdeservicos->map(function ($ordem) {
-            return [
-                'id'    => $ordem->id,
-                'title' => $ordem->cliente . ' - ' . $ordem->servico,
-                'start' => $ordem->data_de_entrega  . 'T' . ($ordem->hora_de_entrega ?? '00:00:00'),
-                'end'   => $ordem->data_de_entrega . 'T' . ($ordem->hora_de_entrega ?? '00:00:00'),
-                'url'   => route('adminOrdemDeServico.show', $ordem->id),
-            ];
-        });
+        foreach ($ordens as $ordem) {
+            $inicio = \Carbon\Carbon::parse($ordem->data_de_entrega);
+            $fim = $ordem->prazo_da_impressao_data 
+                ? \Carbon\Carbon::parse($ordem->prazo_da_impressao_data) 
+                : $inicio;
+
+            $hora = $ordem->hora_de_entrega ?? '00:00:00';
+
+            // Se tiver intervalo, repete todo dia
+            if ($fim->gt($inicio)) {
+                for ($data = $inicio->copy(); $data->lte($fim); $data->addDay()) {
+                    $events->push([
+                        'id'    => $ordem->id,
+                        'title' => $ordem->cliente . ' - ' . $ordem->servico,
+                        'start' => $data->format('Y-m-d') . 'T' . $hora,
+                        'end'   => $data->format('Y-m-d') . 'T' . $hora,
+                        'url'   => route('adminOrdemDeServico.show', $ordem->id),
+                        'backgroundColor' => $ordem->cor ?? 'orange',
+                    ]);
+                }
+            } else {
+                // Evento único
+                $events->push([
+                    'id'    => $ordem->id,
+                    'title' => $ordem->cliente . ' - ' . $ordem->servico,
+                    'start' => $inicio->format('Y-m-d') . 'T' . $hora,
+                    'end'   => $inicio->format('Y-m-d') . 'T' . $hora,
+                    'url'   => route('adminOrdemDeServico.show', $ordem->id),
+                    'backgroundColor' => $ordem->cor ?? 'orange',
+                ]);
+            }
+        }
 
         return response()->json($events);
     }
+
+
+
+    public function updateColor(Request $request, $id)
+{
+    $ordem = OrdemDeServico::findOrFail($id);
+    $ordem->cor = $request->cor;
+    $ordem->save();
+
+    return response()->json(['success' => true]);
+}
+
 
 }

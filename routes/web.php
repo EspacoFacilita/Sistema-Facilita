@@ -22,6 +22,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/admin/ordemdeservico/producao/calendario', [CalendarioController::class, 'getCalendario'])->name('adminOrdemDeServico.calendario');
     Route::get('/admin/ordemdeservico/producao/calendario/events', [CalendarioController::class, 'getEvents'])
     ->name('adminOrdemDeServico.calendario.events');
+    Route::post('/admin/ordemdeservico/{id}/update-color', [CalendarioController::class, 'updateColor'])
+    ->name('adminOrdemDeServico.updateColor');
+
     
     Route::get('/admin/ordemdeservico/entregues', [OrdemDeServicoController::class, 'entregues'])->name('adminOrdemDeServico.entregues');
     Route::get('/admin/ordemdeservico/concluidas', [OrdemDeServicoController::class, 'concluidas'])->name('adminOrdemDeServico.concluidas');
