@@ -138,8 +138,8 @@
                                         <input type="text" name="falta" class="form-control " id="falta" placeholder="Falta" value="{{old('falta')}}" onInput="mascaraMoeda(event);">
                                     </div>
                                 </div>
-                                <div style="border: 2px solid #094081;" class="col-13 row d-flex justify-content-evenly">
-                                    <h5 style="background-color: #094081;" class="col-12 d-flex justify-content-center text-white">PRAZO  DE ENTREGA DO SERVIÇO</h5>
+                                <div style="border: 2px solid #FF8A00;" class="col-13 row d-flex justify-content-evenly">
+                                    <h5 style="background-color: #FF8A00;" class="col-12 d-flex justify-content-center text-white">PRAZO  DE ENTREGA DO SERVIÇO</h5>
                                     <div class=" d-flex justify-content-between">
                                         <div class="col-5"> 
                                             <div class="row mb-3 ">
@@ -173,12 +173,12 @@
                                     </div>
                                 </div>
                             </div>              
-                            <div class="mt-4 p-0 flex-wrap col-6 form-floating d-flex d-flex justify-content-evenly flex-wrap">
+                            <div class="mt-4 p-0 flex-wrap col-6 form-floating d-flex d-flex justify-content-evenly background-color: ">
                                 <div class="col-12 row d-flex justify-content-evenly border border-success border-bottom-0 ">
-                                    <h5 class="col-12 d-flex justify-content-center text-bg-success align-items-center">PRAZO DA IMPRESSÃO</h5>
+                                    <h5  style="background-color: #094081;" class="col-12 d-flex justify-content-center text-light align-items-center">PRAZO DE ENTREGA DO SERVIÇO</h5>
                                     <div class="row mb-3 col-6 align-items-center">
                                         <div class="col  d-flex justify-content-between align-items-center">
-                                            <label class="  mx-2">D.E:</label>
+                                            <label class="  mx-2">D.E.F:</label>
                                             <input type="date" name="prazo_da_impressao_data" class="form-control" id="prazo_da_impressao_data" placeholder="Data de entrega da impressão" value="{{old('prazo_da_impressao_data')}}">
                                             @error('prazo_da_impressao_data')
                                                 <span class="text-danger">{{$message}}</span>
