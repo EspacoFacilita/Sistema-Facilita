@@ -15,8 +15,10 @@ class CalendarioController extends Controller
         public function getEvents()
     {
         $ordens = OrdemDeServico::where('status', 'Produção')
-            ->orderBy('data_de_recebimento', 'asc')
-            ->get();
+        ->where('servico_externo', 1) // só mostra os com servico_externo = 1
+        ->orderBy('data_de_recebimento', 'asc')
+        ->get();
+
 
         $events = collect();
 
