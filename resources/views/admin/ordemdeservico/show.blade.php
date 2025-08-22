@@ -13,7 +13,7 @@
                 href="{{ route('adminOrdemDeServico.index') }}" class="btn text-dark">Voltar</a>
         </div>
     </x-slot>
-    <div class="py-3">
+    <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
@@ -126,11 +126,10 @@
                                         {{ $ordemServico->falta }}</p>
                                 </div>
                             </div>
-                            <div style="border: 2px solid #FF8A00;"
-                                    class="col-13 row d-flex justify-content-evenly">
-                                    <h5 style="background-color: #FF8A00;"
-                                        class="col-12 d-flex justify-content-center text-white">PRAZO DE ENTREGA DO
-                                        SERVIÇO</h5>
+                            <div style="border: 2px solid #FF8A00;" class="col-13 row d-flex justify-content-evenly">
+                                <h5 style="background-color: #FF8A00;"
+                                    class="col-12 d-flex justify-content-center text-white">PRAZO DE ENTREGA DO
+                                    SERVIÇO</h5>
                                 <div class=" d-flex justify-content-evenly">
                                     <div class="col-5">
                                         <div class="row mb-3 ">
@@ -164,45 +163,27 @@
                         <div class=" p-0 flex-wrap col-6 form-floating d-flex d-flex justify-content-evenly">
                             <div
                                 class="col-12 row d-flex justify-content-evenly border border-success border-bottom-0 ">
-                                <h5  style="background-color: #094081;" class="col-12 d-flex justify-content-center text-light align-items-center">PRAZO DE ENTREGA DO SERVIÇO</h5>
-                                    <div class="row mb-3 col-6 align-items-center">
-                                        <div class="col  d-flex justify-content-between align-items-center">
-                                            <label class="  mx-2">D.E.F:</label>
+                                <h5 style="background-color: #094081;"
+                                    class="col-12 d-flex justify-content-center text-light align-items-center">PERÍODO
+                                    DE ENTREGA DO SERVIÇO
+                                </h5>
+                                <div class="row mb-3 col-6 align-items-center">
+                                    <div class="col d-flex  align-items-center">
+                                        <label class="  mx-2">D.I:</label>
+                                        <p class="fs-5 m-0">
+                                            {{ date('d/m/Y', strtotime($ordemServico->dia_do_recebimento_do_controle)) }}</p>
+                                    </div>
+                                </div>
+                                <div class="row mb-3 col-6 align-items-center">
+                                    <div class="col  d-flex  align-items-center">
+                                        <label class="  mx-2">D.F:</label>
                                         <p class="fs-5 m-0">
                                             {{ date('d/m/Y', strtotime($ordemServico->prazo_da_impressao_data)) }}</p>
                                     </div>
                                 </div>
-                                <div class="row mb-3 col-6 align-items-center d-flex justify-content-center">
-                                    <div class="col">
-                                        <label class="fs-5 d-flex justify-content-center ms-3">HORA ENTREGA:</label>
-                                        <p class="fs-5 d-flex justify-content-center m-0 border-bottom border-dark">
-                                            {{ $ordemServico->prazo_da_impressao_hora }}</p>
-                                    </div>
-                                </div>
+                
                             </div>
-                            <div style="border: 2px solid #FF8A00;"
-                                class="col-12 row d-flex justify-content-evenly border-bottom-0 ">
-                                <h5 style="background-color: #FF8A00;"
-                                    class="col-12 d-flex justify-content-center text-white align-items-center">ESTA ABA
-                                    É RESTRITAMENTE DO IMPRESSOR</h5>
-                                <div class="col-7 row mb-3 align-items-center">
-                                    <div class="">
-                                        <label class="fs-5 d-flex justify-content-center ms-3">DIA REC. DO CONTROLE
-                                        </label>
-                                        <p class= "fs-5 m-0 d-flex justify-content-center">
-                                            {{ date('d/m/Y', strtotime($ordemServico->dia_do_recebimento_do_controle)) }}
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="row mb-3 col-5 align-items-center ">
-                                    <div class="">
-                                        <label class="fs-5 d-flex justify-content-center ms-3" for="">HORA
-                                            REC. </label>
-                                        <p class="fs-5 m-0 d-flex justify-content-center border-bottom border-dark">
-                                            {{ $ordemServico->hora_do_recebimento_do_controle }}</p>
-                                    </div>
-                                </div>
-                            </div>
+                            
                             <div style="border: 2px solid #8F00FF;"
                                 class="col-12 row d-flex justify-content-evenly  border-bottom-0 ">
                                 <h5 style="background-color: #8F00FF;"
@@ -252,7 +233,7 @@
                                             <label class="fs-5 form-check-label opacity-100"
                                                 for="inlineRadio1">CARTÃO</label>
                                         </div>
-                                        <div class="form-check form-check-inline">
+                                        <div class="form-check form-check-inline mb-5">
                                             <input class="form-check-input  border border-black  rounded-0 opacity-100"
                                                 type="radio" name="formas_de_pagamento" id="formas_de_pagamento"
                                                 value="pag.naloja"

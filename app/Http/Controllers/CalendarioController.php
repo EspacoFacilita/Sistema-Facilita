@@ -23,7 +23,7 @@ class CalendarioController extends Controller
         $events = collect();
 
         foreach ($ordens as $ordem) {
-            $inicio = \Carbon\Carbon::parse($ordem->data_de_entrega);
+            $inicio = \Carbon\Carbon::parse($ordem->dia_do_recebimento_do_controle);
             $fim = $ordem->prazo_da_impressao_data 
                 ? \Carbon\Carbon::parse($ordem->prazo_da_impressao_data) 
                 : $inicio;
