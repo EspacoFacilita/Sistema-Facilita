@@ -92,6 +92,7 @@
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'listWeek',
+                weekends: false,
                 locale: 'pt-br',
                 height: 'auto',
                 headerToolbar: {
