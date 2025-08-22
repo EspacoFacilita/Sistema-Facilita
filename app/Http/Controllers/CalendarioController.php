@@ -4,28 +4,30 @@ namespace App\Http\Controllers;
 
 use App\Models\OrdemDeServico;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class CalendarioController extends Controller
 {
+    // Retorna a view do calendário
     public function getCalendario()
     {
         return view('admin.ordemdeservico.calendario');
     }
 
-        public function getEvents()
+    // Retorna os eventos do calendário
+    public function getEvents()
     {
         $ordens = OrdemDeServico::where('status', 'Produção')
-        ->where('servico_externo', 1) // só mostra os com servico_externo = 1
-        ->orderBy('data_de_recebimento', 'asc')
-        ->get();
-
+            ->where('servico_externo', 1) // só mostra os com servico_externo = 1
+            ->orderBy('data_de_recebimento', 'asc')
+            ->get();
 
         $events = collect();
 
         foreach ($ordens as $ordem) {
-            $inicio = \Carbon\Carbon::parse($ordem->dia_do_recebimento_do_controle);
-            $fim = $ordem->prazo_da_impressao_data 
-                ? \Carbon\Carbon::parse($ordem->prazo_da_impressao_data) 
+            $inicio = Carbon::parse($ordem->dia_do_recebimento_do_controle);
+            $fim = $ordem->prazo_da_impressao_data
+                ? Carbon::parse($ordem->prazo_da_impressao_data)
                 : $inicio;
 
             $hora = $ordem->hora_de_entrega ?? '00:00:00';
@@ -40,6 +42,10 @@ class CalendarioController extends Controller
                         'end'   => $data->format('Y-m-d') . 'T' . $hora,
                         'url'   => route('adminOrdemDeServico.show', $ordem->id),
                         'backgroundColor' => $ordem->cor ?? 'orange',
+                        'extendedProps' => [
+                            'cliente' => $ordem->cliente,
+                            'servico' => $ordem->servico,
+                        ],
                     ]);
                 }
             } else {
@@ -51,6 +57,10 @@ class CalendarioController extends Controller
                     'end'   => $inicio->format('Y-m-d') . 'T' . $hora,
                     'url'   => route('adminOrdemDeServico.show', $ordem->id),
                     'backgroundColor' => $ordem->cor ?? 'orange',
+                    'extendedProps' => [
+                        'cliente' => $ordem->cliente,
+                        'servico' => $ordem->servico,
+                    ],
                 ]);
             }
         }
@@ -58,16 +68,13 @@ class CalendarioController extends Controller
         return response()->json($events);
     }
 
-
-
+    // Atualiza a cor do evento
     public function updateColor(Request $request, $id)
-{
-    $ordem = OrdemDeServico::findOrFail($id);
-    $ordem->cor = $request->cor;
-    $ordem->save();
+    {
+        $ordem = OrdemDeServico::findOrFail($id);
+        $ordem->cor = $request->cor;
+        $ordem->save();
 
-    return response()->json(['success' => true]);
-}
-
-
+        return response()->json(['success' => true]);
+    }
 }

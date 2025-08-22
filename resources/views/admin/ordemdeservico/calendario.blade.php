@@ -1,6 +1,6 @@
 <x-app-layout>
     <style>
-        /* Dias da semana (dom, seg, ter...) e números dos dias */
+        /* Dias da semana e números dos dias */
         .fc-col-header-cell-cushion,
         .fc-daygrid-day-number {
             color: black !important;
@@ -10,7 +10,6 @@
         /* Cabeçalho da lista (dias da semana) */
         .fc-listWeek-view .fc-list-day-cushion {
             font-size: 1.2rem;
-            /* aumenta fonte */
             font-weight: bold;
             color: black;
         }
@@ -31,14 +30,11 @@
         /* Botões do calendário */
         .fc .fc-button {
             background-color: #e9e9e9;
-            /* cor de fundo */
             color: #111827;
-            /* cor do texto */
             border: none;
             box-shadow: none;
         }
 
-        /* Hover e focus nos botões */
         .fc .fc-button:hover,
         .fc .fc-button:focus {
             background-color: #111827;
@@ -48,7 +44,6 @@
         /* Bolinha de evento */
         .fc-list-event-dot {
             margin-right: 0.5rem;
-            /* ajusta espaço entre bolinha e hora/título */
             vertical-align: middle;
         }
 
@@ -59,27 +54,21 @@
             text-decoration: none;
             cursor: default;
         }
-
-        .fc-event {
-            margin-left: '3px';
-        }
     </style>
 
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/locales/pt-br.global.min.js"></script>
 
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Calendário das Ordens de Serviço') }}
-        </h2>
-    </x-slot>
-
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <h1 class="mb-3">Agenda de Produção</h1>
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h1 class="m-0">Agenda de Produção</h1>
+                        <input type="text" id="search-calendar" placeholder="Pesquisar por cliente ou serviço"
+                            class="form-control w-25">
+                    </div>
                     <hr />
                     <div id="calendar"></div>
                 </div>
@@ -115,34 +104,32 @@
                     minute: '2-digit',
                     hour12: false
                 },
-
                 eventClick: function(info) {
                     info.jsEvent.preventDefault();
-                    if (info.event.url) {
-                        window.location.href = info.event.url;
-                    }
+                    if (info.event.url) window.location.href = info.event.url;
                 },
-
                 eventDidMount: function(info) {
-                    let el = info.el;
-                    let bgColor = info.event.backgroundColor || '#3788d8';
+                    const el = info.el;
+                    const bgColor = info.event.backgroundColor || 'orange';
 
+                    // Adiciona atributos para pesquisa
+                    el.setAttribute('data-cliente', info.event.extendedProps.cliente.toLowerCase());
+                    el.setAttribute('data-servico', info.event.extendedProps.servico.toLowerCase());
+
+                    // Estilo do mês
                     if (info.view.type === 'dayGridMonth') {
-                        // Fundo colorido e texto branco
                         el.style.backgroundColor = bgColor;
                         el.style.color = 'white';
-                        el.style.border = '1px';
-
-                        let dot = info.el.querySelector('.fc-daygrid-event-dot');
+                        let dot = el.querySelector('.fc-daygrid-event-dot');
                         if (dot) dot.style.display = 'none';
                     }
 
+                    // Estilo da lista
                     if (info.view.type === 'listWeek') {
-                        // Mantém bolinha azul ou laranja
                         let dot = el.querySelector('.fc-event-dot');
                         if (dot) dot.style.display = 'inline-block';
 
-                        // Pode adicionar banner se quiser
+                        // Mantém o banner
                         let banner = document.createElement('div');
                         banner.style.width = '10rem';
                         banner.style.height = '80%';
@@ -186,6 +173,18 @@
             });
 
             calendar.render();
+
+            // Pesquisa por cliente ou serviço
+            const searchInput = document.getElementById('search-calendar');
+            searchInput.addEventListener('input', function() {
+                const query = this.value.toLowerCase();
+                document.querySelectorAll('#calendar .fc-event').forEach(el => {
+                    const cliente = el.getAttribute('data-cliente') || '';
+                    const servico = el.getAttribute('data-servico') || '';
+                    el.style.display = (cliente.includes(query) || servico.includes(query)) ? '' :
+                        'none';
+                });
+            });
         });
     </script>
 </x-app-layout>

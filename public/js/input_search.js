@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                 <span class="mr-2 text-center">
                                     <a href="/admin/ordemdeservico${
                                         ordem.id
-                                    }" class="btn bg-secondary text-white fs-6"><svg
+                                    }" class="btn bg-secondary text-white fs-6 w-24"><svg
                                                                 xmlns="http://www.w3.org/2000/svg" fill="none"
                                                                 viewBox="0 0 24 24" stroke-width="1.5"
                                                                 stroke="currentColor" class="size-6">
