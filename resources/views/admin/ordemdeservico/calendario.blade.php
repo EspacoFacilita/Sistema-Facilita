@@ -185,6 +185,10 @@
                         'none';
                 });
             });
+            setInterval(function() {
+                console.log('Atualizando calendário...');
+                calendar.refetchEvents();
+            }, 5000);
         });
     </script>
 </x-app-layout>
