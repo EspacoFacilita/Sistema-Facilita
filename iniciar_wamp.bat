@@ -18,5 +18,6 @@ start cmd /k "php artisan serve --host=0.0.0.0 --port=8001"
 :: Aguarde alguns segundos para garantir que o servidor Laravel 2 esteja rodando
 timeout /t 10 > nul
 
-:: ----- Abrir o navegador -----
-start "" "C:\Program Files\Google\Chrome\Application\chrome.exe" http://127.0.0.1:8000 http://127.0.0.1:8001
+:: ----- Abrir o navegador em modo quiosque com impressão silenciosa -----
+start "" "C:\Program Files\Google\Chrome\Application\chrome.exe" --kiosk-printing http://127.0.0.1:8000 http://127.0.0.1:8001
+
