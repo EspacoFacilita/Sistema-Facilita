@@ -91,14 +91,16 @@
                             <div class="col-6 mt-4 border border-black ">
                                 <div class="row mb-3 mt-4">
                                     <div class="col d-flex justify-content-between align-items-center">
-                                        <label class="  mx-2  "for="">Cliente:</label>
-                                        <input type="text" name="cliente" class="form-control " id="cliente"
+                                        <label class="mx-2" for="">Cliente:</label>
+                                        <input type="text" name="cliente" class="form-control" id="cliente"
                                             placeholder="Nome do Cliente" value="{{ old('cliente') }}" required>
                                         @error('cliente')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
+
+                                <div id="clienteList"></div>
                                 <div class="row mb-3">
                                     <div class="col d-flex justify-content-between align-items-center">
                                         <label class="  mx-2"for="">Serviço:</label>
@@ -437,10 +439,51 @@
             </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+
+            $('#cliente').keyup(function() {
+                var query = $(this).val();
+                var _token = $('input[name="_token"]').val();
+
+                if (query != '') {
+                    $.ajax({
+                        url: "{{ route('clientes.autocomplete') }}",
+                        method: "POST",
+                        data: {
+                            search: query,
+                            _token: _token
+                        },
+                        success: function(data) {
+                            var html = '<ul class="dropdown-menu show">';
+                            $.each(data, function(key, value) {
+                                html += '<li class="dropdown-item">' + value.nome +
+                                    '</li>';
+                            });
+                            html += '</ul>';
+                            $('#clienteList').html(html);
+                        }
+                    });
+                } else {
+                    $('#clienteList').html('');
+                }
+            });
+
+            // Quando clicar em um item
+            $(document).on('click', '.dropdown-item', function() {
+                $('#cliente').val($(this).text());
+                $('#clienteList').html('');
+            });
+
+        });
+    </script>
+
     <!-- Alpine Plugins -->
     <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/mask@3.x.x/dist/cdn.min.js"></script>
     <!-- Alpine Core -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="{{ asset('js/input_image.js') }}"></script>
     <script src="{{ asset('js/mascara.js') }}"></script>
+
 </x-app-layout>

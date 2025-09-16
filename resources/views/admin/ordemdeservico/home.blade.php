@@ -1,6 +1,7 @@
 <x-app-layout>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <a href="{{ route('clientes.index') }}">clientes</a>
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="text-gray-900">
                     <div class="p-6 pb-0 flex flex-col md:flex-row md:items-center md:justify-between">

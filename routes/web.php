@@ -4,28 +4,31 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrdemDeServicoController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\FuncionarioController;
-use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\CalendarioController;
 
 Route::middleware(['auth', 'verified'])->group(function () {
+
     // Rota de busca única para ordens de serviço
     Route::get('/search-orders', [OrdemDeServicoController::class, 'search'])->name('OrdemDeServicoSearch.orders');
 
     // routes/loginRealizado
+    Route::resource('clientes', ClienteController::class);
+    Route::post('/clientes/autocomplete', [ClienteController::class, 'autocomplete'])->name('clientes.autocomplete');
+
     Route::get('/', [OrdemDeServicoController::class, 'index'])->name('adminOrdemDeServico.index');
     Route::get('/admin', [OrdemDeServicoController::class, 'index'])->name('adminOrdemDeServico.index');
     Route::get('/admin/ordemdeservico', [OrdemDeServicoController::class, 'index'])->name('adminOrdemDeServico.index');
     Route::get('/admin/ordemdeservico/Impressao', [OrdemDeServicoController::class, 'Impressao'])->name('adminOrdemDeServico.Impressao');
     Route::get('/admin/ordemdeservico/producao', [OrdemDeServicoController::class, 'producao'])->name('adminOrdemDeServico.producao');
-    
+
     // calendario
     Route::get('/admin/ordemdeservico/producao/calendario', [CalendarioController::class, 'getCalendario'])->name('adminOrdemDeServico.calendario');
     Route::get('/admin/ordemdeservico/producao/calendario/events', [CalendarioController::class, 'getEvents'])
-    ->name('adminOrdemDeServico.calendario.events');
+        ->name('adminOrdemDeServico.calendario.events');
     Route::post('/admin/ordemdeservico/{id}/update-color', [CalendarioController::class, 'updateColor'])
-    ->name('adminOrdemDeServico.updateColor');
+        ->name('adminOrdemDeServico.updateColor');
 
-    
+
     Route::get('/admin/ordemdeservico/entregues', [OrdemDeServicoController::class, 'entregues'])->name('adminOrdemDeServico.entregues');
     Route::get('/admin/ordemdeservico/concluidas', [OrdemDeServicoController::class, 'concluidas'])->name('adminOrdemDeServico.concluidas');
     Route::get('/admin/ordemdeservico/laser', [OrdemDeServicoController::class, 'laser'])->name('adminOrdemDeServico.laser');
@@ -49,11 +52,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::middleware(['auth', 'admin'])->group(function () {
     // routes/funcionarios
     Route::get('/search-funcionarios', [FuncionarioController::class, 'search']);
-    Route::get('/admin/funcionario', [RegisteredUserController::class, 'index'])->name('adminFuncionario.index');
     Route::get('/admin/funcionario', [FuncionarioController::class, 'index'])->name('adminFuncionario.home');
     Route::get('/admin/funcionario/edit/{id}', [FuncionarioController::class, 'edit'])->name('adminFuncionario.edit');
     Route::put('/admin/funcionario/{id}', [FuncionarioController::class, 'update'])->name('adminFuncionario.update');
     Route::get('/admin/funcionario/{id}', [FuncionarioController::class, 'destroy'])->name('adminFuncionario.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
