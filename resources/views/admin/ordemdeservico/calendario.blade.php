@@ -1,4 +1,5 @@
 <x-app-layout>
+    
     <style>
         /* Dias da semana e números dos dias */
         .fc-col-header-cell-cushion,

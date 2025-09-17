@@ -21,20 +21,53 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
-        body {
-            font-family: 'Manrope', sans-serif;
+        @media print {
+
+            aside,
+            .no-print {
+                display: none !important;
+                /* esconde sidebar e outros elementos */
+            }
+
+            main {
+                margin-left: 0 !important;
+                /* remove o ml-64 só na impressão */
+                width: 100% !important;
+            }
+
+            body,
+            html {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+            }
+
+            .p-6,
+            .bg-white {
+                box-shadow: none !important;
+                border-radius: 0 !important;
+            }
         }
+
         body {
             font-family: 'Nunito', sans-serif;
+        }
+
+        a {
+            text-decoration: none
+        }
+
+        ion-icon {
+            --ionicon-stroke-width: 48px;
         }
     </style>
 </head>
 
 <body data-usertype="{{ Auth::user()->usertype }}" class="antialiased">
-    <div class="min-h-screen bg-gray-100">
-        @include('layouts.navigation')
+    <div class="flex min-h-screen bg-gray-100 ">
+        @include('layouts.sidebar')
         <!-- Page Content -->
-        <main>
+        <main class="ml-64 flex-1 overflow-y-auto">
             {{ $slot }}
         </main>
     </div>

@@ -205,10 +205,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     data.forEach((funcionario) => {
                         const tr = document.createElement("tr");
                         tr.innerHTML = `
-                            <td class="text-center align-middle">${funcionario.id}</td>
-                            <td class="text-center align-middle">${funcionario.name}</td>
-                            <td class="text-center align-middle">${funcionario.usertype}</td>
-                            <td class="text-center align-middle">
+                            <td class="align-middle border border-gray-400">${funcionario.id}</td>
+                            <td class="align-middle border border-gray-400">${funcionario.name}</td>
+                            <td class="align-middle border border-gray-400">${funcionario.usertype}</td>
+                            <td class="align-middle border border-gray-400">
                                 <div class="btn-group" role="group">
                                     <span class="p-2">
                                       <a style="background-color: #FF8A00; border: 2px solid #FF8A00;" 

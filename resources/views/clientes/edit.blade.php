@@ -16,7 +16,7 @@
 
             <div class="mb-4">
                 <label>Telefone:</label>
-                <input type="text" name="telefone" value="{{ old('telefone', $cliente->telefone) }}"
+                <input type="text" name="fone" value="{{ old('fone', $cliente->fone) }}"
                     class="border p-2 w-full" placeholder="(99) 99999-9999" required>
             </div>
 

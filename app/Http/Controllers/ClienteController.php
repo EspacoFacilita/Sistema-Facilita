@@ -21,7 +21,7 @@ class ClienteController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'telefone' => 'required|unique:clientes|regex:/^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/',
+            'fone' => 'required|unique:clientes|regex:/^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/',
             'nome' => 'required|string|max:255',
             'endereco' => 'nullable|string|max:255',
         ]);
@@ -40,7 +40,7 @@ class ClienteController extends Controller
     public function update(Request $request, Cliente $cliente)
     {
         $request->validate([
-            'telefone' => 'required|regex:/^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/|unique:clientes,telefone,' . $cliente->id,
+            'fone' => 'required|regex:/^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/|unique:clientes,fone,' . $cliente->id,
             'nome' => 'required|string|max:255',
             'endereco' => 'nullable|string|max:255',
         ]);
@@ -59,9 +59,14 @@ class ClienteController extends Controller
 
     public function autocomplete(Request $request)
     {
-        $data = Cliente::where('nome', 'LIKE', '%' . $request->search . '%')
-            ->get();
+        $query = $request->input('search');
 
-        return response()->json($data);
+        $clientes = Cliente::when($query, function ($q) use ($query) {
+            $q->where('nome', 'LIKE', '%' . $query . '%');
+        })
+            ->orderBy('nome', 'asc')
+            ->get(['id', 'nome', 'endereco', 'fone']);
+
+        return response()->json($clientes);
     }
 }

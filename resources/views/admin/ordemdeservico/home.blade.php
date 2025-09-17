@@ -1,10 +1,8 @@
-<x-app-layout>
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <a href="{{ route('clientes.index') }}">clientes</a>
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+    <x-app-layout>
+        <div class="max-w-7xl mx-auto p-2">
+            <div class="overflow-hidden ">
                 <div class="text-gray-900">
-                    <div class="p-6 pb-0 flex flex-col md:flex-row md:items-center md:justify-between">
+                    <div class="py-6 px-2 pb-0 flex flex-col md:flex-row md:items-center md:justify-between">
                         <div class="flex column items-center gap-1">
                             <svg class="w-14 h-14 text-gray-800" xmlns="http://www.w3.org/2000/svg" fill="none"
                                 viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -12,7 +10,7 @@
                                     d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z" />
                             </svg>
 
-                            <h1 class="mb-0 font-bold text-gray-800">Lista das Ordens de Serviços</h1>
+                            <h1 class="mb-0 font-bold text-gray-800">Ordens de Serviço</h1>
                         </div>
                         <div class="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
                             <input type="text" id="search" data-page="home"
@@ -37,7 +35,7 @@
                             {{ Session::get('success') }}
                         </div>
                     @endif
-                    <div class="p-4 py-0">
+                    <div class="p-2 py-0">
                         <table class="table table-hover border-collapse border border-gray-400 table-auto rounded-md">
                             <thead class="text-white">
                                 <tr class="text-center">
@@ -157,86 +155,86 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    @if ($ordensVencidas->isNotEmpty())
-        <div class="modal fade" id="ordensVencidasModal" tabindex="-1" role="dialog">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Ordens de Serviço Vencidas</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true" style="font-size: 2rem;">&times;</span>
-                        </button>
-                    </div>
 
-                    <h5 class="d-flex justify-content-center me-4 m-3">Para listar todas as Ordens de Serviços
-                        atrasadas, pesquise: Atrasado</h5>
-                    <div class="modal-body">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>CÓD.Arte</th>
-                                    <th>Cliente</th>
-                                    <th>Serviços</th>
-                                    <th>Funcionário</th>
-                                    <th>Data e Hora de Entrega</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($ordensVencidas as $ordem)
+        @if ($ordensVencidas->isNotEmpty())
+            <div class="modal fade" id="ordensVencidasModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Ordens de Serviço Vencidas</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true" style="font-size: 2rem;">&times;</span>
+                            </button>
+                        </div>
+
+                        <h5 class="d-flex justify-content-center me-4 m-3">Para listar todas as Ordens de Serviços
+                            atrasadas, pesquise: Atrasado</h5>
+                        <div class="modal-body">
+                            <table class="table table-hover">
+                                <thead>
                                     <tr>
-                                        <td>{{ $ordem->id }}</td>
-                                        <td>{{ $ordem->cliente }}</td>
-                                        <td>{{ $ordem->servico }}</td>
-                                        <td>{{ $ordem->nome_funcionario }}</td>
-                                        <td>{{ date('d/m/Y H:i', strtotime($ordem->data_de_entrega . ' ' . $ordem->hora_de_entrega)) }}
-                                        </td>
-                                        <td>
-                                            @php
-                                                $statusClass = '';
-                                                $statusTextClass = '';
-                                                switch ($ordem->status) {
-                                                    case 'Pendente':
-                                                        $statusClass = 'bg-danger';
-                                                        $statusTextClass = 'text-white'; // Bootstrap text color for better contrast
-                                                        break;
-                                                    case 'Impressão':
-                                                        $statusClass = 'bg-warning';
-                                                        $statusTextClass = 'text-dark';
-                                                        break;
-                                                    case 'Laser':
-                                                        $statusClass = 'backgroundColorLaser';
-                                                        $statusTextClass = 'text-darkLaser';
-                                                        break;
-                                                    case 'Produção':
-                                                        $statusClass = 'bg-primary';
-                                                        $statusTextClass = 'text-white';
-                                                        break;
-                                                    case 'Concluido':
-                                                        $statusClass = 'bg-success';
-                                                        $statusTextClass = 'text-white';
-                                                        break;
-                                                    default:
-                                                        $statusClass = 'bg-secondary';
-                                                        $statusTextClass = 'text-white';
-                                                }
-                                            @endphp
-                                            <span
-                                                class="px-3 py-2 rounded  {{ $statusClass }} {{ $statusTextClass }}">
-                                                {{ ucfirst($ordem->status) }}
-                                            </span>
-                                        </td>
+                                        <th>CÓD.Arte</th>
+                                        <th>Cliente</th>
+                                        <th>Serviços</th>
+                                        <th>Funcionário</th>
+                                        <th>Data e Hora de Entrega</th>
+                                        <th>Status</th>
                                     </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @foreach ($ordensVencidas as $ordem)
+                                        <tr>
+                                            <td>{{ $ordem->id }}</td>
+                                            <td>{{ $ordem->cliente }}</td>
+                                            <td>{{ $ordem->servico }}</td>
+                                            <td>{{ $ordem->nome_funcionario }}</td>
+                                            <td>{{ date('d/m/Y H:i', strtotime($ordem->data_de_entrega . ' ' . $ordem->hora_de_entrega)) }}
+                                            </td>
+                                            <td>
+                                                @php
+                                                    $statusClass = '';
+                                                    $statusTextClass = '';
+                                                    switch ($ordem->status) {
+                                                        case 'Pendente':
+                                                            $statusClass = 'bg-danger';
+                                                            $statusTextClass = 'text-white'; // Bootstrap text color for better contrast
+                                                            break;
+                                                        case 'Impressão':
+                                                            $statusClass = 'bg-warning';
+                                                            $statusTextClass = 'text-dark';
+                                                            break;
+                                                        case 'Laser':
+                                                            $statusClass = 'backgroundColorLaser';
+                                                            $statusTextClass = 'text-darkLaser';
+                                                            break;
+                                                        case 'Produção':
+                                                            $statusClass = 'bg-primary';
+                                                            $statusTextClass = 'text-white';
+                                                            break;
+                                                        case 'Concluido':
+                                                            $statusClass = 'bg-success';
+                                                            $statusTextClass = 'text-white';
+                                                            break;
+                                                        default:
+                                                            $statusClass = 'bg-secondary';
+                                                            $statusTextClass = 'text-white';
+                                                    }
+                                                @endphp
+                                                <span
+                                                    class="px-3 py-2 rounded  {{ $statusClass }} {{ $statusTextClass }}">
+                                                    {{ ucfirst($ordem->status) }}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    @endif
-    <script src="{{ asset('js/input_search.js') }}"></script>
-    <script src="{{ asset('js/ordens_vencidas.js') }}"></script>
-</x-app-layout>
+        @endif
+        <script src="{{ asset('js/input_search.js') }}"></script>
+        <script src="{{ asset('js/ordens_vencidas.js') }}"></script>
+    </x-app-layout>

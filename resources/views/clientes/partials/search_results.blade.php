@@ -1,7 +1,9 @@
 <ul class="list-group">
     @forelse($clientes as $cliente)
-        <li class="list-group-item list-group-item-action" data-nome="{{ $cliente->nome }}"
-            data-telefone="{{ $cliente->telefone }}" data-endereco="{{ $cliente->endereco }}">
+        <li class="list-group-item list-group-item-action"
+            data-nome="{{ $cliente->nome }}"
+            data-fone="{{ $cliente->fone }}"
+            data-endereco="{{ $cliente->endereco }}">
             {{ $cliente->nome }}
         </li>
     @empty
