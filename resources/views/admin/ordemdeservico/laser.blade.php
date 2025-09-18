@@ -9,7 +9,7 @@
         <div class="overflow-hidden">
             <div class="text-gray-900">
                 <div class="py-6 px-2 pb-0 flex flex-col md:flex-row md:items-center md:justify-between">
-                    <div class="flex column items-center gap-2">
+                    <div class="flex column items-center gap-1">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-14 h-14 text-gray-800">
                             <path stroke-linecap="round" stroke-linejoin="round"

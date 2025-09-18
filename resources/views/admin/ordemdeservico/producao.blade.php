@@ -10,7 +10,7 @@
             <div class="text-gray-900">
                 <!-- Cabeçalho -->
                 <div class="py-6 px-2 pb-0 flex flex-col md:flex-row md:items-center md:justify-between">
-                    <div class="flex column items-center gap-2">
+                    <div class="flex column items-center gap-1">
                         <!-- Ícone Produção -->
                         <svg class="w-14 h-14 text-gray-800" xmlns="http://www.w3.org/2000/svg" fill="none"
                             viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
