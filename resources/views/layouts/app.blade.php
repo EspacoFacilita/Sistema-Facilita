@@ -56,14 +56,10 @@
         a {
             text-decoration: none
         }
-
-        ion-icon {
-            --ionicon-stroke-width: 48px;
-        }
     </style>
 </head>
 
-<body data-usertype="{{ Auth::user()->usertype }}" class="antialiased">
+<body data-usertype="{{ Auth::user()->usertype }}" class="antialiased text-gray-800">
     <div class="flex min-h-screen bg-gray-100 ">
         @include('layouts.sidebar')
         <!-- Page Content -->

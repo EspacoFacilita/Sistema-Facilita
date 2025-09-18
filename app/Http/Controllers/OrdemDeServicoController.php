@@ -6,28 +6,39 @@ use App\Models\Cliente;
 use Illuminate\Http\Request;
 use App\Models\OrdemDeServico;
 use Carbon\Carbon;
-
+use Illuminate\Support\Facades\DB;
 
 
 class OrdemDeServicoController extends Controller
 {
     public function index()
     {
-        // Filtrando as ordens de serviço para exibir na página
         $ordemdeservicos = OrdemDeServico::whereIn('status', ['Pendente', 'Impressão', 'Laser', 'Produção'])
             ->orderBy('id', 'asc')
             ->get();
 
-        // Filtrando apenas ordens de serviço vencidas considerando data e hora
-        $ordensVencidas = OrdemDeServico::whereRaw("STR_TO_DATE(CONCAT(data_de_entrega, ' ', hora_de_entrega), '%Y-%m-%d %H:%i:%s') < ?", [now()])
-            ->whereNotIn('status', ['Entregue', 'Concluido']) // Exclui as com status "Entregue" e "Concluido"
+        $ordensVencidas = OrdemDeServico::whereRaw(
+            "STR_TO_DATE(CONCAT(data_de_entrega, ' ', hora_de_entrega), '%Y-%m-%d %H:%i:%s') < ?",
+            [now()]
+        )
+            ->whereNotIn('status', ['Entregue', 'Concluido'])
             ->get();
 
         $total = OrdemDeServico::count();
 
-        return view('admin.ordemdeservico.home', compact(['ordemdeservicos', 'total', 'ordensVencidas']));
-    }
+        $statusCounts = OrdemDeServico::select('status', DB::raw('COUNT(*) as total'))
+            ->whereIn('status', ['Pendente', 'Impressão', 'Laser', 'Produção', 'Concluido', 'Entregue'])
+            ->groupBy('status')
+            ->pluck('total', 'status')
+            ->toArray();
 
+        return view('admin.ordemdeservico.home', compact(
+            'ordemdeservicos',
+            'total',
+            'ordensVencidas',
+            
+        ));
+    }
 
     public function entregar($id)
     {

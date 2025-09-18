@@ -2,10 +2,8 @@
     <div class="max-w-7xl mx-auto p-2">
         <div class="overflow-hidden">
             <div class="text-gray-900">
-                <!-- Header -->
                 <div class="py-6 px-2 pb-0 flex flex-col md:flex-row md:items-center md:justify-between">
                     <div class="flex items-center gap-1">
-                        <!-- Ícone -->
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-14 h-14 text-gray-800">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -14,25 +12,22 @@
 
                         <h1 class="mb-0 font-bold text-gray-800">Ordens Concluídas</h1>
                     </div>
-
-                    <!-- Busca -->
                     <div class="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
+                        <button id="btn-hoje"
+                            class="px-3 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-lg shadow transition">
+                            Hoje
+                        </button>
                         <input type="text" id="search" data-page="concluidas"
                             placeholder="Buscar Ordens de Serviço..."
                             class="w-full sm:w-64 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition" />
                     </div>
                 </div>
-
                 <hr>
-
-                <!-- Alerta -->
                 @if (Session::has('success'))
                     <div class="alert alert-success mt-3" role="alert">
                         {{ Session::get('success') }}
                     </div>
                 @endif
-
-                <!-- Tabela -->
                 <div class="p-2 py-0">
                     <table class="table table-hover border-collapse border border-gray-400 table-auto rounded-md">
                         <thead class="text-white bg-green-600">
@@ -119,6 +114,17 @@
             </div>
         </div>
     </div>
+    <script>
+        document.getElementById('btn-hoje').addEventListener('click', function() {
+            const hoje = new Date();
+            const dia = String(hoje.getDate()).padStart(2, '0');
+            const mes = String(hoje.getMonth() + 1).padStart(2, '0');
+            const ano = hoje.getFullYear();
+            document.getElementById('search').value = `${dia}/${mes}/${ano}`;
 
+            // se quiser já disparar a busca automática:
+            document.getElementById('search').dispatchEvent(new Event('input'));
+        });
+    </script>
     <script src="{{ asset('js/input_search.js') }}"></script>
 </x-app-layout>

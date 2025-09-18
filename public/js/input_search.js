@@ -71,10 +71,10 @@ document.addEventListener("DOMContentLoaded", () => {
                             </td>
                             <td class="align-middle text-center">
                                 <div class="btn-group" role="group">
-                                <span class="mr-2 text-center">
+                                <span class="mr-2 text-center bg-gray-700 rounded">
                                     <a href="/admin/ordemdeservico${
                                         ordem.id
-                                    }" class="btn bg-secondary text-white fs-6"><svg
+                                    }" class="btn text-white fs-6"><svg
                                                                 xmlns="http://www.w3.org/2000/svg" fill="none"
                                                                 viewBox="0 0 24 24" stroke-width="1.5"
                                                                 stroke="currentColor" class="size-6">

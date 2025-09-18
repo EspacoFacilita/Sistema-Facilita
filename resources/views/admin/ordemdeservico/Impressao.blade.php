@@ -12,6 +12,10 @@
                         <h1 class="mb-0 font-bold text-gray-800">Impressão</h1>
                     </div>
                     <div class="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
+                        <button id="btn-hoje"
+                            class="px-3 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-lg shadow transition">
+                            Hoje
+                        </button>
                         <input type="text" id="search" data-page="impressao"
                             placeholder="Buscar Status, Clientes ou ..."
                             class="w-full sm:w-64 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition" />
@@ -223,6 +227,18 @@
             </div>
         </div>
     @endif
+    <script>
+        document.getElementById('btn-hoje').addEventListener('click', function() {
+            const hoje = new Date();
+            const dia = String(hoje.getDate()).padStart(2, '0');
+            const mes = String(hoje.getMonth() + 1).padStart(2, '0');
+            const ano = hoje.getFullYear();
+            document.getElementById('search').value = `${dia}/${mes}/${ano}`;
+
+            // se quiser já disparar a busca automática:
+            document.getElementById('search').dispatchEvent(new Event('input'));
+        });
+    </script>
     <script src="{{ asset('js/input_search.js') }}"></script>
     <script src="{{ asset('js/ordens_vencidas.js') }}"></script>
 </x-app-layout>

@@ -76,7 +76,7 @@
                                                 <span
                                                     class="text-center bg-red-700 hover:bg-red-600 transition rounded">
                                                     <a href="{{ route('adminFuncionario.destroy', ['id' => $funcionario->id]) }}"
-                                                        onclick="return confirm('Você tem certeza?')"
+                                                        onclick="return confirm('Você tem certeza que deseja excluir?')"
                                                         class="btn text-white fs-6">
                                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                                                             fill="currentColor" class="size-5">

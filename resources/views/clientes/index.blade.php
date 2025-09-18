@@ -2,11 +2,9 @@
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800">Clientes</h2>
     </x-slot>
-
     <div class="max-w-7xl mx-auto p-2">
         <div class="overflow-hidden">
             <div class="text-gray-900">
-                <!-- Cabeçalho com ícone -->
                 <div class="py-6 px-2 pb-0 flex flex-col md:flex-row md:items-center md:justify-between">
                     <div class="flex column items-center gap-1">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -76,7 +74,7 @@
                                                 <span
                                                     class="text-center bg-red-700 hover:bg-red-600 transition rounded">
                                                     <form action="{{ route('clientes.destroy', $cliente) }}"
-                                                        method="POST" onsubmit="return confirm('Deseja excluir?')"
+                                                        method="POST" onsubmit="return confirm('Você tem certeza que deseja excluir?')"
                                                         class="inline">
                                                         @csrf
                                                         @method('DELETE')
