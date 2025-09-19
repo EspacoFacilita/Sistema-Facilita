@@ -65,8 +65,10 @@
                                     <tr>
                                         <td class="align-middle text-center border border-gray-300">
                                             {{ $ordemdeservico->id }}</td>
-                                        <td class="align-middle text-center border border-gray-300">
-                                            {{ $ordemdeservico->cliente }}</td>
+                                        <td class="align-middle text-center border border-gray-300"
+                                        style='max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;'>
+                                        {{ $ordemdeservico->cliente }}
+                                    </td>
                                         <td class="align-middle text-center border border-gray-300"
                                             style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                             {{ $ordemdeservico->servico }}</td>

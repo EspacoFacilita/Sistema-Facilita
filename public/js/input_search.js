@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             <td class="align-middle text-center">${
                                 ordem.id
                             }</td>
-                            <td class="align-middle text-center">${
+                            <td class="align-middle text-center" style='max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;'>${
                                 ordem.cliente
                             }</td>
                             <td class="align-middle text-center" style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${
@@ -195,7 +195,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     data.forEach((cliente) => {
                         const tr = document.createElement("tr");
                         tr.innerHTML = `
-                            <td class="text-center align-middle">${cliente.name}</td>
+                            <td class="text-center align-middle" style='max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;'>${cliente.name}</td>
                             <td class="text-center align-middle">${cliente.endereco}</td>
                             <td class="text-center align-middle">${cliente.telefone}</td>
                             <td class="text-center align-middle">
