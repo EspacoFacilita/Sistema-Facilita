@@ -100,7 +100,8 @@
                                         {{ $ordemdeservico->hora_de_entrega }}
                                     </td>
                                     <td class="align-middle text-center border border-gray-300">
-                                        {{ $ordemdeservico->data_retirada->format('d/m/Y H:i') }}
+                                        {{ $ordemdeservico->data_retirada ? $ordemdeservico->data_retirada->format('d/m/Y H:i') : '-' }}
+
                                     </td>
                                     <!-- Status -->
                                     <td class="align-middle text-center border border-gray-300">
