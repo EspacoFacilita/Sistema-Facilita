@@ -74,6 +74,7 @@
                                 <th class="align-middle border border-gray-400">Serviços</th>
                                 <th class="align-middle border border-gray-400">Funcionário</th>
                                 <th class="align-middle border border-gray-400">Data e Hora de Entrega</th>
+                                <th class="align-middle border border-gray-400">Data e Hora de Retirada</th>
                                 <th class="align-middle border border-gray-400">Status</th>
                                 <th class="align-middle border border-gray-400">Ações</th>
                             </tr>
@@ -98,7 +99,9 @@
                                         {{ date('d/m/Y', strtotime($ordemdeservico->data_de_entrega)) }}
                                         {{ $ordemdeservico->hora_de_entrega }}
                                     </td>
-
+                                    <td class="align-middle text-center border border-gray-300">
+                                        {{ $ordemdeservico->data_retirada->format('d/m/Y H:i') }}
+                                    </td>
                                     <!-- Status -->
                                     <td class="align-middle text-center border border-gray-300">
                                         <span class="px-3 py-2 rounded bg-green-800 text-white font-medium">
@@ -158,7 +161,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td class="text-center" colspan="7">Nenhuma ordem entregue encontrada</td>
+                                    <td class="text-center" colspan="8">Nenhuma ordem entregue encontrada</td>
                                 </tr>
                             @endforelse
                         </tbody>

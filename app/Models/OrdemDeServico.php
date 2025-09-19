@@ -35,5 +35,9 @@ class OrdemDeServico extends Model
         'embalagem',
         'observacoes_layout',
         'nome_funcionario',
+        'data_retirada',
+    ];
+    protected $casts = [
+        'data_retirada' => 'datetime',
     ];
 }

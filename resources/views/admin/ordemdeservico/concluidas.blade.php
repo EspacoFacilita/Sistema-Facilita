@@ -128,10 +128,10 @@
                                                         </svg>
                                                     </a>
                                                 </span>
-                                                <span>
+                                                <span class="ml-2 text-center bg-emerald-600 rounded">
                                                     <a href="{{ route('adminOrdemDeServico.entregar', $ordemdeservico->id) }}"
                                                         onclick="return confirm('Você tem certeza que quer passar para entregue?')"
-                                                        class="mx-1 d-flex align-items-center btn bg-success text-white">Entregar</a>
+                                                        class="mx-1 d-flex align-items-center btn text-white">Entregar</a>
                                                 </span>
                                             </div>
                                         </div>

@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     tbody.innerHTML = ""; // Limpa a tabela
                     if (data.data.length === 0) {
                         tbody.innerHTML =
-                            '<tr><td class="text-center" colspan="7">Nenhuma Ordem Encontrada</td></tr>';
+                            '<tr><td class="text-center" colspan="8">Nenhuma Ordem Encontrada</td></tr>';
                         return;
                     }
                     data.data.forEach((ordem) => {
@@ -21,6 +21,24 @@ document.addEventListener("DOMContentLoaded", () => {
                         const formatDate = (dateStr) => {
                             const [year, month, day] = dateStr.split("-");
                             return `${day}/${month}/${year}`;
+                        };
+                        const formatDateTime = (dateTimeStr) => {
+                            const date = new Date(dateTimeStr); // transforma a string em Date
+                            const day = String(date.getDate()).padStart(2, "0");
+                            const month = String(date.getMonth() + 1).padStart(
+                                2,
+                                "0"
+                            ); // meses começam do 0
+                            const year = date.getFullYear();
+                            const hours = String(date.getHours()).padStart(
+                                2,
+                                "0"
+                            );
+                            const minutes = String(date.getMinutes()).padStart(
+                                2,
+                                "0"
+                            );
+                            return `${day}/${month}/${year} ${hours}:${minutes}`;
                         };
                         // Verifica se a ordem está atrasada considerando data e hora
                         const agora = new Date();
@@ -48,6 +66,13 @@ document.addEventListener("DOMContentLoaded", () => {
                             <td class="align-middle text-center">${formatDate(
                                 ordem.data_de_entrega
                             )} ${ordem.hora_de_entrega}</td>
+                            ${
+                                ordem.status === "Entregue"
+                                    ? `<td class="align-middle text-center">${formatDateTime(
+                                          ordem.data_retirada
+                                      )}</td>`
+                                    : ""
+                            }
                             
                             
                             <td class="align-middle">
@@ -98,15 +123,14 @@ document.addEventListener("DOMContentLoaded", () => {
                                     
                                     <!-- Adiciona o botão de 'Entregar' apenas se o tipo de usuário for 'Caixa' -->
                                     ${
-                                        userType === "Caixa"
-                                            ? `
-                                        
-                                        <a href="/admin/ordemdeservico/${ordem.id}/entregar" onclick="return confirm('Você tem certeza que quer passar para entregue?')" class="mx-1 d-flex align-items-center btn bg-success text-white">Entregar</a>
-
-                                        
-                                    `
+                                        userType === "Caixa" &&
+                                        ordem.status === "Entregue"
+                                            ? `<td class="align-middle text-center">${formatDateTime(
+                                                  ordem.data_retirada
+                                              )}</td>`
                                             : ""
                                     }
+
                                 </div>
                             </td>
                         `;
