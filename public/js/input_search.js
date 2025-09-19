@@ -84,6 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                                                     d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                                                             </svg></a>
                                 </span>
+                                
                                 <span>
                                     <a href="/admin/ordemdeservico${
                                         ordem.id
@@ -132,9 +133,9 @@ document.addEventListener("DOMContentLoaded", () => {
             case "Produção":
                 return "bg-primary text-white";
             case "Concluido":
-                return "bg-success text-white";
+                return "bg-green-500 text-white";
             case "Entregue":
-                return "bg-success text-white"; // Para ordens entregues
+                return "bg-green-800 text-white"; // Para ordens entregues
             default:
                 return "bg-secondary text-white";
         }

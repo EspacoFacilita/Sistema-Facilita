@@ -72,35 +72,51 @@
                 </div>
                 <ul x-show="open" class="space-y-1 p-0 mt-1.5" x-cloak>
                     @foreach ($subLinks as $link)
-    @php
-        $active = request()->routeIs($link['route']);
-        $statusColor = match ($link['label']) {
-            'Impressão' => 'yellow-500',
-            'Laser' => 'orange-500',
-            'Produção' => 'blue-500',
-            'Concluídas' => 'green-500',
-            'Entregues' => 'gray-500',
-            default => 'gray-400',
-        };
-        $circleFill = $active ? "fill-$statusColor" : "fill-none";
-        $circleStroke = $active ? "stroke-$statusColor" : "stroke-gray-400";
-    @endphp
-    <li>
-        <a href="{{ route($link['route']) }}"
-            class="flex items-center justify-between no-underline px-4 py-1 rounded transition-colors
+                        @php
+                            $active = request()->routeIs($link['route']);
+                            $circleFill = $active
+                                ? match ($link['label']) {
+                                    'Impressão' => 'fill-yellow-500',
+                                    'Laser' => 'fill-orange-500',
+                                    'Produção' => 'fill-blue-500',
+                                    'Concluídas' => 'fill-green-500',
+                                    'Entregues' => 'fill-green-800',
+                                    default => 'fill-gray-400',
+                                }
+                                : 'fill-none';
+
+                            $circleStroke = $active
+                                ? match ($link['label']) {
+                                    'Impressão' => 'stroke-yellow-500',
+                                    'Laser' => 'stroke-orange-500',
+                                    'Produção' => 'stroke-blue-500',
+                                    'Concluídas' => 'stroke-green-500',
+                                    'Entregues' => 'stroke-green-800',
+                                    default => 'stroke-gray-400',
+                                }
+                                : 'stroke-gray-400';
+                        @endphp
+                        <li>
+                            <a href="{{ route($link['route']) }}"
+                                class="flex items-center justify-between no-underline px-4 py-1 rounded transition-colors
             {{ $active ? 'bg-neutral-200 text-gray-900' : 'text-white hover:text-gray-300 hover:bg-gray-800' }}">
-            <div class="flex items-center">
-                <svg class="w-5 h-5 mx-2" viewBox="0 0 24 24" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="12" cy="12" r="6" class="{{ $circleFill }} {{ $circleStroke }}" />
-                </svg>
-                {{ $link['label'] }}
-            </div>
-            <span class="ml-2 inline-flex items-center justify-center px-2 py-0.5 text-xs font-medium text-white rounded bg-red-500">
-                {{ $link['count'] }}
-            </span>
-        </a>
-    </li>
-@endforeach
+                                <div class="flex items-center">
+                                    <svg class="w-5 h-5 mx-2" viewBox="0 0 24 24" stroke-width="2"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="12" cy="12" r="6"
+                                            class="{{ $circleFill }} {{ $circleStroke }}" />
+
+                                    </svg>
+                                    {{ $link['label'] }}
+                                </div>
+                                <span
+                                    class="ml-2 inline-flex items-center justify-center px-2 py-0.5 text-xs font-medium text-white rounded"
+                                    style="background-color: #dc3546f8">
+                                    {{ $link['count'] }}
+                                </span>
+                            </a>
+                        </li>
+                    @endforeach
 
 
                 </ul>
