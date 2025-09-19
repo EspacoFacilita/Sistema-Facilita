@@ -128,6 +128,11 @@
                                                         </svg>
                                                     </a>
                                                 </span>
+                                                <span>
+                                                    <a href="{{ route('adminOrdemDeServico.entregar', $ordemdeservico->id) }}"
+                                                        onclick="return confirm('Você tem certeza que quer passar para entregue?')"
+                                                        class="mx-1 d-flex align-items-center btn bg-success text-white">Entregar</a>
+                                                </span>
                                             </div>
                                         </div>
                                     </td>
