@@ -37,6 +37,9 @@ class OrdemDeServico extends Model
         'nome_funcionario',
         'data_retirada',
     ];
+    protected $dates = [
+        'data_retirada',
+    ];
     protected $casts = [
         'data_retirada' => 'datetime',
     ];
