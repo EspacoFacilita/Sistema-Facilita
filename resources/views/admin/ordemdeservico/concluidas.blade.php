@@ -127,12 +127,14 @@
                                                                 0h.008v.008H15V10.5Z" />
                                                         </svg>
                                                     </a>
-                                                </span>
+                                                </span> @if (Auth::user()->tipo === 'Caixa')
+                                                {{-- Entregar --}}
                                                 <span class="ml-2 text-center bg-emerald-600 rounded">
                                                     <a href="{{ route('adminOrdemDeServico.entregar', $ordemdeservico->id) }}"
                                                         onclick="return confirm('Você tem certeza que quer passar para entregue?')"
                                                         class="mx-1 d-flex align-items-center btn text-white">Entregar</a>
                                                 </span>
+                                                @endif
                                             </div>
                                         </div>
                                     </td>
