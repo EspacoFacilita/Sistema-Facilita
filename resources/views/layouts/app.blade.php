@@ -56,6 +56,15 @@
         a {
             text-decoration: none
         }
+        #botaoVoltar {
+           
+            color: black;
+        
+        } #botaoVoltar:hover {
+           
+            color: #3b82f6;
+            cursor: pointer;
+        }
     </style>
 </head>
 

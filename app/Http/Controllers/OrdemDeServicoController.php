@@ -42,15 +42,29 @@ class OrdemDeServicoController extends Controller
 
     public function entregar($id)
     {
-        $ordemdeservicos = OrdemDeServico::findOrFail($id);
+        $ordem = OrdemDeServico::findOrFail($id);
 
-        $ordemdeservicos->status = 'Entregue';
-        $ordemdeservicos->data_retirada = Carbon::now('America/Sao_Paulo')->setSecond(0);
-        $ordemdeservicos->save();
+        // Entrega a ordem atual
+        $ordem->status = 'Entregue';
+        $ordem->data_retirada = Carbon::now('America/Sao_Paulo')->setSecond(0);
+        $ordem->save();
+
+        // Verifica outras ordens concluídas do mesmo cliente (exceto a que acabou de entregar)
+        $outrasOrdens = OrdemDeServico::where('cliente_id', $ordem->cliente_id)
+            ->where('status', 'Concluido')
+            ->where('id', '!=', $ordem->id)
+            ->get();
+
+        if ($outrasOrdens->count() > 0) {
+            $msg = 'Existem outras ordens concluídas desse cliente para entrega! CÓD.Arte: ' .
+                $outrasOrdens->pluck('id')->join(', ');
+            session()->flash('warning', $msg);
+        }
 
         session()->flash('success', 'Ordem de serviço marcada como entregue com sucesso!');
         return redirect()->route('adminOrdemDeServico.entregues');
     }
+
 
     // Método para listar ordens de serviço concluidas
     public function Impressao()
@@ -359,6 +373,7 @@ class OrdemDeServicoController extends Controller
             'status' => 'required|in:Pendente,Impressão,Laser,Produção,Concluido,Entregue',
             'ORC_venda'  => 'nullable',
             'cliente'  => 'required',
+            'cliente_id' => 'nullable|exists:clientes,id',
             'servico'  => 'required',
             'end'  => 'nullable',
             'fone' => 'required',

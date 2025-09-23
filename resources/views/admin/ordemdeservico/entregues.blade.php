@@ -3,6 +3,7 @@
         <div class="overflow-hidden">
             <div class="text-gray-900">
                 <!-- Header -->
+
                 <div class="py-6 px-2 pb-0 flex flex-col md:flex-row md:items-center md:justify-between">
                     <div class="flex items-center gap-1">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -63,6 +64,12 @@
                         {{ Session::get('success') }}
                     </div>
                 @endif
+                @if (Session::has('warning'))
+                    <div class="alert alert-warning mt-2" role="alert">
+                        {{ Session::get('warning') }}
+                    </div>
+                @endif
+
 
                 <!-- Tabela -->
                 <div class="p-2 py-0">
@@ -85,7 +92,8 @@
                                     <td class="align-middle text-center border border-gray-300">
                                         {{ $ordemdeservico->id }}
                                     </td>
-                                    <td class="align-middle text-center border border-gray-300" style="max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                    <td class="align-middle text-center border border-gray-300"
+                                        style="max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                         {{ $ordemdeservico->cliente }}
                                     </td>
                                     <td class="align-middle text-center border border-gray-300"

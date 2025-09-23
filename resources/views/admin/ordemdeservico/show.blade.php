@@ -1,20 +1,37 @@
 <x-app-layout>
-    <x-slot name="header">
-        <div class="d-flex justify-content-between d-flex align-items-center">
-            <span class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Visualizar Ordem de Serviço') }}
-            </span>
-            @if (Session::has('success'))
-                <div class="alert alert-success" role="alert">
-                    {{ Session::get('success') }}
-                </div>
-            @endif
-            <a style="background-color: #ADB5BD;border: 2px solid #ADB5BD;"
-                href="{{ route('adminOrdemDeServico.index') }}" class="btn text-dark">Voltar</a>
-        </div>
-    </x-slot>
     <div class="max-w-7xl mx-auto p-4">
-        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+        @if (Session::has('success'))
+            <div x-data="{ show: true, progress: 100 }" x-init="setInterval(() => { if (progress > 0) progress -= 1 }, 40);
+            setTimeout(() => { show = false }, 4000)" x-show="show" x-cloak
+                x-transition:enter="transform ease-out duration-500 transition"
+                x-transition:enter-start="translate-x-10 opacity-0" x-transition:enter-end="translate-x-0 opacity-100"
+                x-transition:leave="transform ease-in duration-500 transition"
+                x-transition:leave-start="translate-x-0 opacity-100" x-transition:leave-end="translate-x-10 opacity-0"
+                class="fixed top-4 right-2 w-80 bg-green-500 text-white px-4 py-3 rounded-lg shadow-lg z-50 inline-flex items-center gap-2">
+                {{ Session::get('success') }}
+            </div>
+        @endif
+        @php
+            $rotaVoltar = match ($ordemServico->status) {
+                'Entregue' => route('adminOrdemDeServico.entregues'),
+                'Impressão' => route('adminOrdemDeServico.Impressao'),
+                'Produção' => route('adminOrdemDeServico.producao'),
+                'Concluído' => route('adminOrdemDeServico.concluidas'),
+                'Laser' => route('adminOrdemDeServico.laser'),
+                default => route('adminOrdemDeServico.index'),
+            };
+        @endphp
+
+        <a id="botaoVoltar" style="span, svg:hover{}" href="{{ $rotaVoltar }}"
+            class="inline-flex items-center gap-1.5 transition">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" vieawBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-5 h-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18" />
+            </svg>
+            Voltar
+        </a>
+
+        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-3">
             <div class="p-6 text-gray-900">
                 <div class="d-flex justify-content-between d-flex align-items-center no-print">
                     <div class="d-flex flex-row d-flex align-items-center">

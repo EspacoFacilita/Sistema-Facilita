@@ -1,15 +1,27 @@
 <x-app-layout>
-    <x-slot name="header">
-        <div class="d-flex justify-content-between d-flex align-items-center">
-            <span class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Visualizar Ordem de Serviço') }}
-            </span>
-            <a style="background-color: #ADB5BD;border: 2px solid #ADB5BD;"
-                href="{{ route('adminOrdemDeServico.index') }}" class="btn btn-primary text-dark">Voltar</a>
-        </div>
-    </x-slot>
+
     <div class="max-w-7xl mx-auto p-4">
-        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+        @if (Session::has('success'))
+            <div x-data="{ show: true, progress: 100 }" x-init="setInterval(() => { if (progress > 0) progress -= 1 }, 40);
+            setTimeout(() => { show = false }, 4000)" x-show="show" x-cloak
+                x-transition:enter="transform ease-out duration-500 transition"
+                x-transition:enter-start="translate-x-10 opacity-0" x-transition:enter-end="translate-x-0 opacity-100"
+                x-transition:leave="transform ease-in duration-500 transition"
+                x-transition:leave-start="translate-x-0 opacity-100" x-transition:leave-end="translate-x-10 opacity-0"
+                class="fixed top-4 right-2 w-80 bg-green-500 text-white px-4 py-3 rounded-lg shadow-lg z-50 inline-flex items-center gap-2">
+                {{ Session::get('success') }}
+            </div>
+        @endif
+
+        <a id="botaoVoltar" style="span, svg:hover{}" href="{{ route('adminOrdemDeServico.index') }}"
+            class="inline-flex items-center gap-1.5 transition">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" vieawBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-5 h-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18" />
+            </svg>
+            Voltar
+        </a>
+        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-3">
             <div class="p-6 text-gray-900">
                 @if (session()->has('error'))
                     <div>
@@ -18,6 +30,8 @@
                 @endif
                 <form action="{{ route('adminOrdemDeServico.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
+
+
                     <div class="d-flex justify-content-between d-flex align-items-center">
                         <div class="d-flex flex-row align-items-center">
                             <h3 class="m-0">Estados da Ordem de Serviço:</h3>
@@ -99,6 +113,8 @@
                             </div>
 
                             <div id="clienteList"></div>
+                            <input type="hidden" name="cliente_id" id="cliente_id" value="{{ old('cliente_id') }}"
+                                data-cliente-id="{{ old('cliente_id') }}">
                             <div class="row mb-3">
                                 <div class="col d-flex justify-content-between align-items-center">
                                     <label class="  mx-2"for="">Serviço:</label>
@@ -444,7 +460,8 @@
                     success: function(data) {
                         var html = '<ul class="dropdown-menu show">';
                         $.each(data, function(key, value) {
-                            html += '<li class="dropdown-item" data-endereco="' +
+                            html += '<li class="dropdown-item" data-cliente_id="' + value.id +
+                                '" data-endereco="' +
                                 value.endereco + '" data-fone="' +
                                 value.fone + '">' +
                                 value.nome + '</li>';
@@ -452,6 +469,7 @@
                         html += '</ul>';
                         $('#clienteList').html(html);
                     }
+
                 });
             }
 
@@ -474,8 +492,12 @@
                 $('#cliente').val($(this).text());
                 $('#end').val($(this).data('endereco'));
                 $('#fone').val($(this).data('fone'));
+                $('#cliente_id').val($(this).data('cliente_id')); // valor do hidden
+                $('#cliente_id').attr('data-cliente-id', $(this).data('cliente_id')); // atributo data
                 $('#clienteList').html('');
             });
+
+
 
             // Fecha lista ao clicar fora
             $(document).click(function(e) {

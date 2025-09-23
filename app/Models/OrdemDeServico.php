@@ -15,6 +15,7 @@ class OrdemDeServico extends Model
         'status',
         'ORC_venda',
         'cliente',
+        'cliente_id',
         'servico',
         'end',
         'fone',
