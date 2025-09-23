@@ -51,24 +51,24 @@ document.addEventListener("DOMContentLoaded", () => {
                             dataEntrega < agora;
 
                         tr.innerHTML = `
-                            <td class="align-middle text-center">${
+                            <td class="align-middle text-center border border-gray-300">${
                                 ordem.id
                             }</td>
-                            <td class="align-middle text-center" style='max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;'>${
+                            <td class="align-middle text-center border border-gray-300" style='max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;'>${
                                 ordem.cliente
                             }</td>
-                            <td class="align-middle text-center" style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${
+                            <td class="align-middle text-center border border-gray-300" style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${
                                 ordem.servico
                             }</td>
-                            <td class="align-middle text-center">${
+                            <td class="align-middle text-center border border-gray-300">${
                                 ordem.nome_funcionario
                             }</td>
-                            <td class="align-middle text-center">${formatDate(
+                            <td class="align-middle text-center border border-gray-300">${formatDate(
                                 ordem.data_de_entrega
                             )} ${ordem.hora_de_entrega}</td>
                             ${
                                 page === "entregues"
-                                    ? `<td class="align-middle text-center">${
+                                    ? `<td class="align-middle text-center border border-gray-300">${
                                           ordem.data_retirada
                                               ? formatDateTime(
                                                     ordem.data_retirada
@@ -77,14 +77,11 @@ document.addEventListener("DOMContentLoaded", () => {
                                       }</td>`
                                     : ""
                             }
-                                       
-
-                            
-                            <td class="align-middle">
-                                <div class="d-flex flex-column align-items-center">
-                                    <span class="px-3 py-2 rounded ${getStatusClass(
+                            <td class="align-middle border border-gray-300">
+                                <div class="d-flex flex-column align-items-center font-medium">
+                                    <span class="px-3 py-2 text-center rounded ${getStatusClass(
                                         ordem.status
-                                    )} text-center w-28">
+                                    )} ">
                                         ${
                                             ordem.status
                                                 .charAt(0)
@@ -94,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                     </span>
                                     ${
                                         atrasado
-                                            ? `<span class="px-3 py-2 w-28 text-center mt-1 rounded bg-dark text-white">Atrasado</span>`
+                                            ? `<span class="px-3 py-2 text-center mt-1 rounded bg-dark text-white">Atrasado</span>`
                                             : ""
                                     }
                                 </div>

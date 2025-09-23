@@ -66,9 +66,9 @@
                                         <td class="align-middle text-center border border-gray-300">
                                             {{ $ordemdeservico->id }}</td>
                                         <td class="align-middle text-center border border-gray-300"
-                                        style='max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;'>
-                                        {{ $ordemdeservico->cliente }}
-                                    </td>
+                                            style='max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;'>
+                                            {{ $ordemdeservico->cliente }}
+                                        </td>
                                         <td class="align-middle text-center border border-gray-300"
                                             style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                             {{ $ordemdeservico->servico }}</td>
@@ -79,7 +79,6 @@
                                             {{ date('d/m/Y', strtotime($ordemdeservico->data_de_entrega)) }}
                                             {{ $ordemdeservico->hora_de_entrega }}
                                         </td>
-
 
                                         <td class="align-middle border border-gray-300">
                                             <div class="d-flex flex-column align-items-center font-medium">
@@ -109,7 +108,7 @@
                                                     }
                                                 @endphp
                                                 <span
-                                                    class="px-3 py-2 rounded {{ $statusClass }} {{ $statusTextClass }} text-center w-28">
+                                                    class="px-3 py-2 text-center rounded {{ $statusClass }} {{ $statusTextClass }}">
                                                     {{ ucfirst($ordemdeservico->status) }}
                                                 </span>
                                                 @php
@@ -120,8 +119,7 @@
                                                     );
                                                 @endphp
                                                 @if ($dataHoraEntrega->isPast())
-                                                    <span
-                                                        class="px-3 py-2 w-28 text-center mt-1 rounded bg-dark text-white">
+                                                    <span class="px-3 py-2 text-center mt-1 rounded bg-dark text-white">
                                                         Atrasado
                                                     </span>
                                                 @endif
