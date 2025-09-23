@@ -14,9 +14,9 @@
         @endif
 
         <a id="botaoVoltar" style="span, svg:hover{}" href="{{ route('adminOrdemDeServico.index') }}"
-            class="inline-flex items-center gap-1.5 transition">
+            class="flex w-24 items-center gap-1.5 transition no-print border border-gray-300 rounded-md px-3 py-2 text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" vieawBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="w-5 h-5">
+                stroke="currentColor" class="w-5 h-5 mb-1">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18" />
             </svg>
             Voltar
