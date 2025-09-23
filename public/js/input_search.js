@@ -66,10 +66,18 @@ document.addEventListener("DOMContentLoaded", () => {
                             <td class="align-middle text-center">${formatDate(
                                 ordem.data_de_entrega
                             )} ${ordem.hora_de_entrega}</td>
-                           
-                                       <td class="align-middle text-center">
-    ${ordem.data_retirada ? formatDateTime(ordem.data_retirada) : "–"}
-</td>
+                            ${
+                                page === "entregues"
+                                    ? `<td class="align-middle text-center">${
+                                          ordem.data_retirada
+                                              ? formatDateTime(
+                                                    ordem.data_retirada
+                                                )
+                                              : "–"
+                                      }</td>`
+                                    : ""
+                            }
+                                       
 
                             
                             <td class="align-middle">
@@ -120,7 +128,8 @@ document.addEventListener("DOMContentLoaded", () => {
                                     
                                     <!-- Adiciona o botão de 'Entregar' apenas se o tipo de usuário for 'Caixa' -->
                                     ${
-                                        userType === "Caixa"
+                                        userType === "Caixa" &&
+                                        page === "concluidas"
                                             ? `
                                         
                                         <a href="/admin/ordemdeservico/${ordem.id}/entregar" onclick="return confirm('Você tem certeza que quer passar para entregue?')" class="mx-1 d-flex align-items-center btn bg-success text-white">Entregar</a>
