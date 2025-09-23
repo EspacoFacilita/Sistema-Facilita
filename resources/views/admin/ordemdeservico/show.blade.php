@@ -7,7 +7,7 @@
                 x-transition:enter-start="translate-x-10 opacity-0" x-transition:enter-end="translate-x-0 opacity-100"
                 x-transition:leave="transform ease-in duration-500 transition"
                 x-transition:leave-start="translate-x-0 opacity-100" x-transition:leave-end="translate-x-10 opacity-0"
-                class="fixed top-4 right-2 w-80 bg-green-500 text-white px-4 py-3 rounded-lg shadow-lg z-50 inline-flex items-center gap-2">
+                class="fixed top-4 right-2 w-80 bg-green-500 text-white px-4 py-3 rounded-lg shadow-lg z-50 inline-flex items-center gap-2 no-print">
                 {{ Session::get('success') }}
             </div>
         @endif
@@ -23,7 +23,7 @@
         @endphp
 
         <a id="botaoVoltar" style="span, svg:hover{}" href="{{ $rotaVoltar }}"
-            class="inline-flex items-center gap-1.5 transition">
+            class="inline-flex items-center gap-1.5 transition no-print">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" vieawBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="w-5 h-5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18" />
