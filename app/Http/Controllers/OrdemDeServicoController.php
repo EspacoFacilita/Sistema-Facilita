@@ -135,7 +135,7 @@ class OrdemDeServicoController extends Controller
     {
         $ordemdeservicos = OrdemDeServico::where('status', 'Entregue')
             ->orderBy('id', 'desc')
-            ->get();
+            ->paginate(20);
         $total = OrdemDeServico::count();
 
         return view('admin.ordemdeservico.entregues', compact(['ordemdeservicos', 'total']));
