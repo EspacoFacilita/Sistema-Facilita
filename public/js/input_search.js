@@ -70,9 +70,10 @@ document.addEventListener("DOMContentLoaded", () => {
                                 userType === "Caixa"
                                     ? `
                                         
-                                       <td class="align-middle text-center">${formatDateTime(
-                                           ordem.data_retirada
-                                       )}</td> 
+                                       <td class="align-middle text-center">
+    ${ordem.data_retirada ? formatDateTime(ordem.data_retirada) : "–"}
+</td>
+
                                         
                                     `
                                     : ""
