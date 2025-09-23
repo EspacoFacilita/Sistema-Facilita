@@ -66,20 +66,11 @@ document.addEventListener("DOMContentLoaded", () => {
                             <td class="align-middle text-center">${formatDate(
                                 ordem.data_de_entrega
                             )} ${ordem.hora_de_entrega}</td>
-                            ${
-                                userType === "Caixa"
-                                    ? `
-                                        
+                           
                                        <td class="align-middle text-center">
     ${ordem.data_retirada ? formatDateTime(ordem.data_retirada) : "–"}
 </td>
 
-                                        
-                                    `
-                                    : ""
-                            }
-                            
-                            
                             
                             <td class="align-middle">
                                 <div class="d-flex flex-column align-items-center">
