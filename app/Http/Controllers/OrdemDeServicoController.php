@@ -49,22 +49,23 @@ class OrdemDeServicoController extends Controller
         $ordem->data_retirada = Carbon::now('America/Sao_Paulo')->setSecond(0);
         $ordem->save();
 
-        // Verifica outras ordens concluídas do mesmo cliente (exceto a que acabou de entregar)
-        $outrasOrdens = OrdemDeServico::where('cliente_id', $ordem->cliente_id)
-            ->where('status', 'Concluido')
-            ->where('id', '!=', $ordem->id)
-            ->get();
+        // Só verifica se houver cliente
+        if ($ordem->cliente_id) {
+            $outrasOrdens = OrdemDeServico::where('cliente_id', $ordem->cliente_id)
+                ->where('status', 'Concluido')
+                ->where('id', '!=', $ordem->id)
+                ->get();
 
-        if ($outrasOrdens->count() > 0) {
-            $msg = 'Existem outras ordens concluídas desse cliente para entrega! CÓD.Arte: ' .
-                $outrasOrdens->pluck('id')->join(', ');
-            session()->flash('warning', $msg);
+            if ($outrasOrdens->count() > 0) {
+                $msg = 'Existem outras ordens concluídas desse cliente para entrega! CÓD.Arte: ' .
+                    $outrasOrdens->pluck('id')->join(', ');
+                session()->flash('warning', $msg);
+            }
         }
 
         session()->flash('success', 'Ordem de serviço marcada como entregue com sucesso!');
         return redirect()->route('adminOrdemDeServico.entregues');
     }
-
 
     // Método para listar ordens de serviço concluidas
     public function Impressao()
