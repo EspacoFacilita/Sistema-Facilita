@@ -43,12 +43,14 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-between d-flex align-items-center">
-                        @if ($ordemServico->status !== 'Concluido' && $ordemServico->status !== 'Entregue')
-                            <span class="ml-2 text-center  bg-emerald-600 rounded me-3">
-                                <a href="{{ route('adminOrdemDeServico.concluir', $ordemServico->id) }}"
-                                    onclick="return confirm('Você tem certeza que quer concluir o serviço?')"
-                                    class="mx-1 d-flex align-items-center btn  text-white">Concluir</a>
-                            </span>
+                        @if (Auth::user()->usertype === 'Caixa'|| Auth::user()->usertype === 'Admin' || Auth::user()->usertype === 'Produção' )
+                            @if ($ordemServico->status !== 'Concluido' && $ordemServico->status !== 'Entregue')
+                                <span class="ml-2 text-center  bg-emerald-600 rounded me-3">
+                                    <a href="{{ route('adminOrdemDeServico.concluir', $ordemServico->id) }}"
+                                        onclick="return confirm('Você deseja transferir para a aba de Concluído?')"
+                                        class="mx-1 d-flex align-items-center btn  text-white"> Marcar Concluído</a>
+                                </span>
+                            @endif
                         @endif
 
 

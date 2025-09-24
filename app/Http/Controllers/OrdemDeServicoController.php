@@ -316,13 +316,16 @@ class OrdemDeServicoController extends Controller
             'observacoes_layout' => 'nullable|string',
             'nome_funcionario' => 'required',
         ]);
-
+        if ($request->status === 'Entregue') {
+            $data_retirada = Carbon::now('America/Sao_Paulo')->setSecond(0);
+        }
         $ordemServico = OrdemDeServico::findOrFail($id);
 
         // Atualiza os outros campos
         $ordemServico->status = $request->status;
         $ordemServico->ORC_venda = $request->ORC_venda;
         $ordemServico->cliente = $request->cliente;
+        $ordemServico->data_retirada = $data_retirada;
         $ordemServico->servico = $request->servico;
         $ordemServico->end = $request->end;
         $ordemServico->fone = $request->fone;
