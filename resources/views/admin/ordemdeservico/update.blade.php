@@ -59,9 +59,7 @@
                                             <option value="Concluido"
                                                 {{ $ordemServico->status === 'Concluido' ? 'selected' : '' }}>
                                                 Concluído</option>
-                                            <option value="Entregue"
-                                                {{ $ordemServico->status === 'Entregue' ? 'selected' : '' }}>
-                                                Entregue</option>
+
                                         </select>
                                     @else
                                         <select id="status" name="status" class="form-control pe-5" required>

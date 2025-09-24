@@ -129,7 +129,7 @@
                                                         </svg>
                                                     </a>
                                                 </span>
-                                                @if (Auth::user()->usertype === 'Caixa')
+                                                @if (Auth::user()->usertype === 'Caixa' || Auth::user()->usertype === 'Admin')
                                                     {{-- Entregar --}}
                                                     <span class="ml-2 text-center bg-emerald-600 rounded">
                                                         <a href="{{ route('adminOrdemDeServico.entregar', $ordemdeservico->id) }}"
