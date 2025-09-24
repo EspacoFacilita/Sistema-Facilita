@@ -40,7 +40,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/admin/ordemdeservico/edit/{id}', [OrdemDeServicoController::class, 'edit'])->name('adminOrdemDeServico.edit');
     Route::put('/admin/ordemdeservico/{id}', [OrdemDeServicoController::class, 'update'])->name('adminOrdemDeServico.update');
     Route::get('/admin/ordemdeservico/{id}', [OrdemDeServicoController::class, 'destroy'])->name('adminOrdemDeServico.destroy');
-    Route::get('/admin/ordemdeservico/concluir/{id}', [OrdemDeServicoController::class, 'concluir'])->name('adminOrdemDeServico.concluir');
+    Route::get('/admin/ordemdeservico/enviar/{id}/{status}', [OrdemDeServicoController::class, 'enviar'])->name('adminOrdemDeServico.enviar');
     Route::get('/admin/ordemdeservico/{id}/entregar', [OrdemDeServicoController::class, 'entregar'])->name('adminOrdemDeServico.entregar'); // Adicionada
 
 

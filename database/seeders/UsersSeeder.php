@@ -20,9 +20,9 @@ class UsersSeeder extends Seeder
             'password' => bcrypt('12345678'),
             'usertype' => 'Admin',
         ]);
-        for ($i = 1; $i <= 20; $i++) {
+        for ($i = 1; $i <= 1000; $i++) {
             DB::table('ordem_de_servicos')->insert([
-                'status' => 'Impressão',
+                'status' => 'Entregue',
                 'cor' => null,
                 'ORC_venda' => null,
                 'cliente' => "Cliente {$i}",

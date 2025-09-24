@@ -43,16 +43,22 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-between d-flex align-items-center">
-                        @if (Auth::user()->usertype === 'Caixa'|| Auth::user()->usertype === 'Admin' || Auth::user()->usertype === 'Produção' )
+                        @if ($ordemServico->status === 'Impressão' || $ordemServico->status === 'Laser')
+                            <span class="text-center  bg-blue-600 rounded me-2">
+                                <a href="{{ route('adminOrdemDeServico.enviar', ['id' => $ordemServico->id, 'status' => 'Produção']) }}"
+                                    onclick="return confirm('Você deseja transferir para a aba de Produção?')"
+                                    class="mx-1 d-flex align-items-center btn  text-white">Produção</a>
+                            </span>
+                        @endif
+                        @if (Auth::user()->usertype === 'Caixa' || Auth::user()->usertype === 'Admin' || Auth::user()->usertype === 'Produção')
                             @if ($ordemServico->status !== 'Concluido' && $ordemServico->status !== 'Entregue')
                                 <span class="ml-2 text-center  bg-emerald-600 rounded me-3">
-                                    <a href="{{ route('adminOrdemDeServico.concluir', $ordemServico->id) }}"
+                                    <a href="{{ route('adminOrdemDeServico.enviar', ['id' => $ordemServico->id, 'status' => 'Concluido']) }}"
                                         onclick="return confirm('Você deseja transferir para a aba de Concluído?')"
-                                        class="mx-1 d-flex align-items-center btn  text-white"> Marcar Concluído</a>
+                                        class="mx-1 d-flex align-items-center btn  text-white">Concluído</a>
                                 </span>
                             @endif
                         @endif
-
 
                         <a style="background-color: #DC1C2E;border: 2px solid #DC1C2E;"
                             href="{{ route('adminOrdemDeServico.destroy', ['id' => $ordemServico->id]) }}"

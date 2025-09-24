@@ -66,17 +66,17 @@ class OrdemDeServicoController extends Controller
         session()->flash('success', 'Ordem de serviço marcada como entregue com sucesso!');
         return redirect()->route('adminOrdemDeServico.entregues');
     }
-    public function concluir($id)
+    public function enviar($id, $status)
     {
         $ordem = OrdemDeServico::findOrFail($id);
 
         // Entrega a ordem atual
-        $ordem->status = 'Concluido';
+        $ordem->status = $status;
         $ordem->save();
 
         // Só verifica se houver cliente
 
-        session()->flash('success', 'Ordem de serviço marcada como concluída com sucesso!');
+        session()->flash('success', 'Ordem de serviço marcada como ' . $status . ' com sucesso!');
         return redirect()->route('adminOrdemDeServico.show', ['id' => $ordem->id]);
     }
 
@@ -147,8 +147,7 @@ class OrdemDeServicoController extends Controller
     public function entregues()
     {
         $ordemdeservicos = OrdemDeServico::where('status', 'Entregue')
-            ->orderBy('id', 'desc')
-            ->paginate(20);
+            ->orderBy('id', 'desc')->paginate(20)->onEachSide(3);
         $total = OrdemDeServico::count();
 
         return view('admin.ordemdeservico.entregues', compact(['ordemdeservicos', 'total']));
@@ -316,7 +315,7 @@ class OrdemDeServicoController extends Controller
             'observacoes_layout' => 'nullable|string',
             'nome_funcionario' => 'required',
         ]);
-        
+
         $ordemServico = OrdemDeServico::findOrFail($id);
 
         // Atualiza os outros campos
@@ -324,8 +323,8 @@ class OrdemDeServicoController extends Controller
         $ordemServico->ORC_venda = $request->ORC_venda;
         $ordemServico->cliente = $request->cliente;
         if ($request->status === 'Entregue') {
-        $ordemServico->data_retirada =  Carbon::now('America/Sao_Paulo')->setSecond(0);
-         }
+            $ordemServico->data_retirada =  Carbon::now('America/Sao_Paulo')->setSecond(0);
+        }
         $ordemServico->servico = $request->servico;
         $ordemServico->end = $request->end;
         $ordemServico->fone = $request->fone;
