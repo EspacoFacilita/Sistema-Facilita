@@ -125,12 +125,16 @@ document.addEventListener("DOMContentLoaded", () => {
                                     
                                     <!-- Adiciona o botão de 'Entregar' apenas se o tipo de usuário for 'Caixa' -->
                                     ${
-                                        userType === "Caixa" &&
-                                        page === "concluidas"
+                                        (userType === "Caixa" &&
+                                            page === "home") ||
+                                        (page === "concluidas" &&
+                                            (userType === "Caixa" ||
+                                                userType === "Admin"))
                                             ? `
                                         
-                                        <a href="/admin/ordemdeservico/${ordem.id}/entregar" onclick="return confirm('Você tem certeza que quer passar para entregue?')" class="mx-1 d-flex align-items-center btn bg-success text-white">Entregar</a>
-
+                                    <span class="ml-2 text-center bg-emerald-600 rounded">
+                                        <a href="/admin/ordemdeservico/${ordem.id}/entregar" onclick="return confirm('Você tem certeza que quer passar para entregue?')" class="mx-1 d-flex align-items-center btn text-white">Entregar</a>
+                                    </span>
                                         
                                     `
                                             : ""

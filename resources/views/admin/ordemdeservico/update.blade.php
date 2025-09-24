@@ -83,9 +83,9 @@
                                                     Concluído</option>
                                             @endif
                                             @if (in_array($userType, ['Caixa', 'Admin', 'Design']))
-                                                <option value="Entregue"
+                                                {{-- <option value="Entregue"
                                                     {{ $ordemServico->status === 'Entregue' ? 'selected' : '' }}>
-                                                    Entregue</option>
+                                                    Entregue</option> --}}
                                             @endif
                                         </select>
                                     @endif
