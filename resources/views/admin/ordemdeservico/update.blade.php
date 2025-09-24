@@ -8,7 +8,7 @@
                 x-transition:enter-start="translate-x-10 opacity-0" x-transition:enter-end="translate-x-0 opacity-100"
                 x-transition:leave="transform ease-in duration-500 transition"
                 x-transition:leave-start="translate-x-0 opacity-100" x-transition:leave-end="translate-x-10 opacity-0"
-                class="fixed top-4 right-2 w-80 bg-green-500 text-white px-4 py-3 rounded-lg shadow-lg z-50 inline-flex items-center gap-2">
+                class="fixed top-4 right-4 bg-green-500 text-white px-4 py-3 rounded-lg shadow-lg z-50 inline-flex items-center gap-2">
                 {{ Session::get('success') }}
             </div>
         @endif

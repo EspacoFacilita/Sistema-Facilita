@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             }
                             <td class="align-middle border border-gray-300">
                                 <div class="d-flex flex-column align-items-center font-medium">
-                                    <span class="px-3 py-2 text-center rounded ${getStatusClass(
+                                    <span class="px-3 py-2 w-28 text-center rounded ${getStatusClass(
                                         ordem.status
                                     )} ">
                                         ${
@@ -161,7 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
             case "Produção":
                 return "bg-primary text-white";
             case "Concluido":
-                return "bg-green-500 text-white";
+                return "bg-green-600 text-white";
             case "Entregue":
                 return "bg-green-800 text-white"; // Para ordens entregues
             default:

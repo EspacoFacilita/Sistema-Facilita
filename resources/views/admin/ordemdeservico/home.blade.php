@@ -108,7 +108,7 @@
                                                     }
                                                 @endphp
                                                 <span
-                                                    class="px-3 py-2 text-center rounded {{ $statusClass }} {{ $statusTextClass }}">
+                                                    class="px-3 py-2 text-center rounded w-28 {{ $statusClass }} {{ $statusTextClass }}">
                                                     {{ ucfirst($ordemdeservico->status) }}
                                                 </span>
                                                 @php

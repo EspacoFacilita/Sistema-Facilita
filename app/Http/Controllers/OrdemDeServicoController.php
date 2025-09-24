@@ -66,6 +66,19 @@ class OrdemDeServicoController extends Controller
         session()->flash('success', 'Ordem de serviço marcada como entregue com sucesso!');
         return redirect()->route('adminOrdemDeServico.entregues');
     }
+    public function concluir($id)
+    {
+        $ordem = OrdemDeServico::findOrFail($id);
+
+        // Entrega a ordem atual
+        $ordem->status = 'Concluido';
+        $ordem->save();
+
+        // Só verifica se houver cliente
+
+        session()->flash('success', 'Ordem de serviço marcada como concluída com sucesso!');
+        return redirect()->route('adminOrdemDeServico.show', ['id' => $ordem->id]);
+    }
 
     // Método para listar ordens de serviço concluidas
     public function Impressao()

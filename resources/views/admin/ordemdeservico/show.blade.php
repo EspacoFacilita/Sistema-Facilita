@@ -7,7 +7,7 @@
                 x-transition:enter-start="translate-x-10 opacity-0" x-transition:enter-end="translate-x-0 opacity-100"
                 x-transition:leave="transform ease-in duration-500 transition"
                 x-transition:leave-start="translate-x-0 opacity-100" x-transition:leave-end="translate-x-10 opacity-0"
-                class="fixed top-4 right-2 w-80 bg-green-500 text-white px-4 py-3 rounded-lg shadow-lg z-50 inline-flex items-center gap-2 no-print">
+                class="fixed top-4 right-4 bg-green-500 text-white px-4 py-3 rounded-lg shadow-lg z-50 inline-flex items-center gap-2 no-print">
                 {{ Session::get('success') }}
             </div>
         @endif
@@ -43,11 +43,20 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-between d-flex align-items-center">
+                        @if ($ordemServico->status !== 'Concluido' && $ordemServico->status !== 'Entregue')
+                            <span class="ml-2 text-center  bg-emerald-600 rounded me-3">
+                                <a href="{{ route('adminOrdemDeServico.concluir', $ordemServico->id) }}"
+                                    onclick="return confirm('Você tem certeza que quer concluir o serviço?')"
+                                    class="mx-1 d-flex align-items-center btn  text-white">Concluir</a>
+                            </span>
+                        @endif
+
 
                         <a style="background-color: #DC1C2E;border: 2px solid #DC1C2E;"
                             href="{{ route('adminOrdemDeServico.destroy', ['id' => $ordemServico->id]) }}"
                             onclick="return confirm('Você tem certeza que quer Deletar?')"
                             class="btn btn-primary me-3">Deletar</a>
+
 
                         <button style= "background-color: #094081;border: 2px solid #094081;"
                             class="btn btn-primary me-3" onclick="window.print()">Imprimir</button>

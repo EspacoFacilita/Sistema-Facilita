@@ -22,7 +22,7 @@ class UsersSeeder extends Seeder
         ]);
         for ($i = 1; $i <= 20; $i++) {
             DB::table('ordem_de_servicos')->insert([
-                'status' => 'Entregue',
+                'status' => 'Impressão',
                 'cor' => null,
                 'ORC_venda' => null,
                 'cliente' => "Cliente {$i}",
