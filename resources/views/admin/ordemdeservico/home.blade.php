@@ -119,7 +119,7 @@
                                                     );
                                                 @endphp
                                                 @if ($dataHoraEntrega->isPast())
-                                                    <span class="px-3 py-2 text-center mt-1 rounded bg-dark text-white">
+                                                    <span class="px-3 py-2 text-center mt-1 w-28 rounded bg-dark text-white">
                                                         Atrasado
                                                     </span>
                                                 @endif
