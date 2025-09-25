@@ -37,8 +37,29 @@
                 </div>
                 <hr>
                 @if (Session::has('success'))
-                    <div class="alert alert-success mt-3" role="alert">
+                    <div x-data="{ show: true, progress: 100 }" x-init="setInterval(() => { if (progress > 0) progress -= 1 }, 40);
+                    setTimeout(() => { show = false }, 2500)" x-show="show" x-cloak
+                        x-transition:enter="transform ease-out duration-500 transition"
+                        x-transition:enter-start="translate-x-10 opacity-0"
+                        x-transition:enter-end="translate-x-0 opacity-100"
+                        x-transition:leave="transform ease-in duration-500 transition"
+                        x-transition:leave-start="translate-x-0 opacity-100"
+                        x-transition:leave-end="translate-x-10 opacity-0"
+                        class="fixed top-4 right-4 bg-green-500 text-white px-4 py-3 rounded-lg shadow-lg z-50 inline-flex items-center gap-2 no-print">
                         {{ Session::get('success') }}
+                    </div>
+                @endif
+                @if (Session::has('warning'))
+                    <div x-data="{ show: true, progress: 100 }" x-init="setInterval(() => { if (progress > 0) progress -= 1 }, 40);
+                    setTimeout(() => { show = false }, 8000)" x-show="show" x-cloak
+                        x-transition:enter="transform ease-out duration-500 transition"
+                        x-transition:enter-start="translate-x-10 opacity-0"
+                        x-transition:enter-end="translate-x-0 opacity-100"
+                        x-transition:leave="transform ease-in duration-500 transition"
+                        x-transition:leave-start="translate-x-0 opacity-100"
+                        x-transition:leave-end="translate-x-10 opacity-0"
+                        class="fixed top-20 right-4 bg-amber-500 text-white px-4 py-3 rounded-lg shadow-lg z-50 inline-flex items-center gap-2 no-print">
+                        {{ Session::get('warning') }}
                     </div>
                 @endif
                 <div class="p-2 py-0">

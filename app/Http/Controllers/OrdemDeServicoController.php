@@ -64,7 +64,7 @@ class OrdemDeServicoController extends Controller
         }
 
         session()->flash('success', 'Ordem de serviço marcada como entregue com sucesso!');
-        return redirect()->route('adminOrdemDeServico.entregues');
+        return redirect()->route('adminOrdemDeServico.concluidas');
     }
     public function enviar($id, $status)
     {
