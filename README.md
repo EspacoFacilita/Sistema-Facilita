@@ -1,98 +1,85 @@
-Este sistema foi desenvolvido para a empresa Facilita,feito por dois estagiarios da escola EEEP Jeova Costa Lima,com intuito de facilitar a gestão das ordens de serviços. Abaixo você verá os aspectos importantes sobre o sistema:
+💼 Sistema Facilita
 
--> Primeiramente o projeto foi criado e desenvolvido usando laravel breeze;
+Sistema desenvolvido para a empresa Facilita, com o objetivo de gerenciar ordens de serviço e otimizar o controle interno de produção, entrega e atendimento.
 
--> No sistema á niveis de acessos, baseados no tipo do usuário,que lhes permitem alterar o status da ordem de servico e nos niveis mais altos que são os tipos "Admin" e "Design"conseguem cadastrar novos usuários/funcionarios;
+👥 Equipe de Desenvolvimento
 
--> Em "App/Http/controllers" estão os controllers do sistema, e dentro de Auth está os controller de criação dos usuarios(Funcionários);
+2024: Sidarta e Elton
 
--> Em "App/Http/Middleware" está o middleware dos admins(e Designs) que lhes permite acesso maximo do sistema;
+2025: Guido e Carlos
 
--> Em "App/Models" estão os arquivos que protegem a Integridade das informações do banco de dados;
+⚙️ Tecnologias Utilizadas
 
--> Em "database/factories" e "database/seeders" esta o codigo que ja cria automaticamente o usuario base para cadastro dos demais(codigo:1; Senha:12345678;);
+Laravel Breeze – estrutura e autenticação
 
--> Em "database/migrations" está o codigo que gera as tabelas do banco de dados;
+PHP / Blade / JavaScript / CSS
 
--> Em "public/css/styles.css" está todo o nosso css do sistema;
+WampServer – ambiente local de execução
 
--> Em "public/img" está a imagem da logo da Facilita;
+🚀 Principais Funcionalidades
+🔧 Ordens de Serviço
 
--> Em "public/js" estão todos os nosso codigos js do sistema(search,mascara,etc...);
+Criação, edição, conclusão e entrega de ordens.
 
--> Em "resources/views/admin" estão todos os arquivos para cada pagina do sistema e as demais arquivos dentro de "resources/views" são elementos complementares;
+Status dinâmicos (Em produção, Concluída, Entregue, Atrasada).
 
--> Em "routes/Auth" estão definidas as rotas que só podem ser acessados somente por usuarios logados,e tem rotas que so podem ser acessados por usuarios deslogados;
+Data de retirada registrada automaticamente ao marcar como Entregue.
 
--> Em "routes/web" estão as demais rotas do sistema;
+Botões e ações ajustados conforme o tipo de usuário (Caixa, Admin, Design).
 
--> No arquivo "iniciar_wamp.bat" está um codigo que inicializara o servidor,ligando primeiramente o WampServer, e logo após rodando o codigo:"php artisan serve" para abrir a pagina web;
+Mensagens de sucesso e alerta aprimoradas.
 
--> Abaixo está uma descrição padrão sobre o laravel:
+Paginação e layout refinado das tabelas.
 
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+👤 Usuários e Clientes
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+CRUD completo de clientes e funcionários.
 
-## About Laravel
+Controle de acesso por tipo de usuário.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Admin e Design podem cadastrar novos usuários.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+🗓️ Calendário de Ordens
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Exibição de ordens com cores por status.
 
-## Learning Laravel
+Atualização automática a cada 5 segundos.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Oculta finais de semana.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Pesquisa por cliente e serviço.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+🎨 Interface e Usabilidade
 
-## Laravel Sponsors
+Botão “Hoje” para preenchimento rápido de datas.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Máscara para números de telefone.
 
-### Premium Partners
+Ajustes visuais em tabelas, botões e notificações.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+Impressão otimizada (oculta botões e alertas).
 
-## Contributing
+Textos e mensagens traduzidos para pt_BR.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+🧩 Estrutura do Projeto
+Diretório / Arquivo	Descrição
+App/Http/Controllers	Controladores principais e autenticação
+App/Http/Middleware	Permissões de acesso (Admin, Design)
+App/Models	Modelos e integridade de dados
+database/factories / seeders	Cria usuário base (codigo:1, senha:12345678)
+database/migrations	Estrutura das tabelas do banco
+public/css / public/js	Estilos e scripts (busca, máscaras, etc.)
+resources/views	Páginas e layouts Blade
+routes/web.php	Rotas principais
+routes/auth.php	Rotas protegidas por login
+iniciar_wamp.bat	Inicializa Wamp e executa php artisan serve
+▶️ Como Executar o Sistema
 
-## Code of Conduct
+Inicie o WampServer
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Execute o arquivo:
 
-## Security Vulnerabilities
+iniciar_wamp.bat
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+O sistema será aberto automaticamente no navegador.
