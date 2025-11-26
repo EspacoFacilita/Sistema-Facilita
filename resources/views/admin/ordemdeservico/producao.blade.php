@@ -56,6 +56,7 @@
                                 <th class="border border-gray-400">Serviços</th>
                                 <th class="border border-gray-400">Funcionário</th>
                                 <th class="border border-gray-400">Data e Hora de Entrega</th>
+                                <th class="border border-gray-400">Entrada na Produção</th>
                                 <th class="border border-gray-400">Status</th>
                                 <th class="border border-gray-400">Ações</th>
                             </tr>
@@ -81,6 +82,14 @@
                                         {{ date('d/m/Y', strtotime($ordemdeservico->data_de_entrega)) }}
                                         {{ $ordemdeservico->hora_de_entrega }}
                                     </td>
+                                    @if ($ordemdeservico->entrada_producao)
+                                        <td class="align-middle text-center border border-gray-300">
+                                            {{ date('d/m/Y', strtotime($ordemdeservico->entrada_producao)) }}
+                                            {{ date('H:i', strtotime($ordemdeservico->entrada_producao)) }}
+                                        </td>
+                                    @else
+                                        <td class="align-middle text-center border border-gray-300">-</td>
+                                    @endif
 
                                     <!-- Status -->
                                     <td class="align-middle border border-gray-300">
@@ -129,6 +138,8 @@
                                             @endif
                                         </div>
                                     </td>
+
+
 
                                     <!-- Ações -->
                                     <td class="align-middle text-center border border-gray-300">

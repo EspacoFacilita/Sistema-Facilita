@@ -66,12 +66,17 @@ class OrdemDeServicoController extends Controller
         session()->flash('success', 'Ordem de serviço marcada como entregue com sucesso!');
         return redirect()->route('adminOrdemDeServico.concluidas');
     }
+
+
     public function enviar($id, $status)
     {
         $ordem = OrdemDeServico::findOrFail($id);
 
         // Entrega a ordem atual
         $ordem->status = $status;
+        if ($status === 'Produção') {
+            $ordem->entrada_producao = Carbon::now('America/Sao_Paulo')->setSecond(0);
+        }
         $ordem->save();
 
         // Só verifica se houver cliente
