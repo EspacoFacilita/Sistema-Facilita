@@ -37,6 +37,7 @@ class OrdemDeServico extends Model
         'observacoes_layout',
         'nome_funcionario',
         'data_retirada',
+        'entrada_producao',
     ];
     protected $dates = [
         'data_retirada',
