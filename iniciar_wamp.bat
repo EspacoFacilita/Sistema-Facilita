@@ -19,5 +19,6 @@ start cmd /k "php artisan serve --host=0.0.0.0 --port=8001"
 timeout /t 10 > nul
 
 :: ----- Abrir o navegador em modo quiosque com impressão silenciosa -----
-start "" "C:\Program Files\Google\Chrome\Application\chrome.exe" --kiosk-printing http://127.0.0.1:8000 http://127.0.0.1:8001
+start "" "C:\Program Files\Google\Chrome\Application\chrome.exe" http://127.0.0.1:8000
 
+start "" "C:\Program Files\Google\Chrome\Application\chrome.exe" --kiosk-printing http://127.0.0.1:8001
