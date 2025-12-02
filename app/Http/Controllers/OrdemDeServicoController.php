@@ -72,18 +72,23 @@ class OrdemDeServicoController extends Controller
     {
         $ordem = OrdemDeServico::findOrFail($id);
 
-        // Entrega a ordem atual
         $ordem->status = $status;
+
         if ($status === 'Produção') {
             $ordem->entrada_producao = Carbon::now('America/Sao_Paulo')->setSecond(0);
         }
-        $ordem->save();
 
-        // Só verifica se houver cliente
+        if ($status === 'Concluido') {
+            $foneLimpo = preg_replace('/\D/', '', $ordem->fone);
+            session()->flash('redirect', $foneLimpo);
+        }
+
+        $ordem->save();
 
         session()->flash('success', 'Ordem de serviço marcada como ' . $status . ' com sucesso!');
         return redirect()->route('adminOrdemDeServico.show', ['id' => $ordem->id]);
     }
+
 
     // Método para listar ordens de serviço concluidas
     public function Impressao()

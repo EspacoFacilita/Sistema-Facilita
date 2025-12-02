@@ -1,16 +1,28 @@
 <x-app-layout>
+
     <div class="max-w-7xl mx-auto p-4">
-        @if (Session::has('success'))
-            <div x-data="{ show: true, progress: 100 }" x-init="setInterval(() => { if (progress > 0) progress -= 1 }, 40);
-            setTimeout(() => { show = false }, 4000)" x-show="show" x-cloak
-                x-transition:enter="transform ease-out duration-500 transition"
-                x-transition:enter-start="translate-x-10 opacity-0" x-transition:enter-end="translate-x-0 opacity-100"
-                x-transition:leave="transform ease-in duration-500 transition"
-                x-transition:leave-start="translate-x-0 opacity-100" x-transition:leave-end="translate-x-10 opacity-0"
-                class="fixed top-4 right-4 bg-green-500 text-white px-4 py-3 rounded-lg shadow-lg z-50 inline-flex items-center gap-2 no-print">
+        @php
+            $hasRedirect = Session::has('redirect');
+            $hasSuccess = Session::has('success');
+        @endphp
+
+        @if ($hasRedirect)
+            <div class="fixed top-4 right-4 bg-green-600 text-white px-4 py-3 rounded-lg shadow-lg z-50 no-print"
+                x-data="{ show: true }" x-init="setTimeout(() => show = false, 10000)" x-show="show">
+                <a href="https://wa.me/55{{ preg_replace('/\D/', '', Session::get('redirect')) }}?text=Ol%C3%A1,%20gostaria%20de%20informar%20que%20seu%20pedido%20ja%20est%C3%A1%20pronto%20para%20retirada."
+                    target="_blank" class="text-white">
+                    Clique aqui para notificar o cliente que a ordem de serviço está concluída.
+                </a>
+            </div>
+        @endif
+
+        @if ($hasSuccess)
+            <div class="fixed {{ $hasRedirect ? 'top-20' : 'top-4' }} right-4 bg-green-600 text-white px-4 py-3 rounded-lg shadow-lg z-50 no-print"
+                x-data="{ show: true }" x-init="setTimeout(() => show = false, 4000)" x-show="show">
                 {{ Session::get('success') }}
             </div>
         @endif
+
         @php
             $rotaVoltar = match ($ordemServico->status) {
                 'Entregue' => route('adminOrdemDeServico.entregues'),
@@ -35,9 +47,9 @@
             <div class="p-6 text-gray-900">
                 <div class="d-flex justify-content-between d-flex align-items-center no-print">
                     <div class="d-flex flex-row d-flex align-items-center">
-                        <h3 class="m-0">Estados da Ordem de Serviço:</h3>
+                        <h3 class="m-0">Categoria da Ordem de Serviço:</h3>
                         <div class="row ms-1">
-                            <div class="col border-2 rounded ms-3" style="border: 2px solid ##dee2e6;">
+                            <div class="col border-2 rounded ms-3" style="border: 2px solid #dee2e6;">
                                 <h4 class="m-0 p-1 ">{{ $ordemServico->status }}</h4>
                             </div>
                         </div>
@@ -352,9 +364,9 @@
                             </p>
                         </div>
                         <div class="col-10">
-                            <h4 class=" d-flex justify-content-center">Serviço Autorizado pelo cliente</h4>
-                            <p class="fs-5 d-flex justify-content-center">Declaro Ter Lido. Corrigido Tanto
-                                Textualmente Quando Visualmante Meu Serviço</p>
+                            <h4 class=" d-flex justify-content-center">Serviço autorizado pelo cliente</h4>
+                            <p class="fs-5 d-flex justify-content-center">Declaro ter lido e corrigido meu serviço, tanto textualmente quanto visualmente.
+</p>
                         </div>
                     </div>
                     <div class="col-3 ">

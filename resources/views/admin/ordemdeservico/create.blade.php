@@ -34,7 +34,7 @@
 
                     <div class="d-flex justify-content-between d-flex align-items-center">
                         <div class="d-flex flex-row align-items-center">
-                            <h3 class="m-0">Estados da Ordem de Serviço:</h3>
+                            <h3 class="m-0">Categoria da Ordem de Serviço:</h3>
                             <div class="row ms-1">
                                 <div class="col">
                                     <select id="status" name="status" class="form-control pe-5" required>

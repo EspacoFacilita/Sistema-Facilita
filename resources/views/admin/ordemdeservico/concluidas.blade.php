@@ -49,6 +49,9 @@
                         {{ Session::get('success') }}
                     </div>
                 @endif
+
+
+
                 @if (Session::has('warning'))
                     <div x-data="{ show: true, progress: 100 }" x-init="setInterval(() => { if (progress > 0) progress -= 1 }, 40);
                     setTimeout(() => { show = false }, 8000)" x-show="show" x-cloak
@@ -150,7 +153,7 @@
                                                         </svg>
                                                     </a>
                                                 </span>
-                                                {{--! EXEMPLO --}}
+                                                {{-- ! EXEMPLO --}}
                                                 @if (Auth::user()->usertype === 'Caixa' || Auth::user()->usertype === 'Admin')
                                                     {{-- Entregar --}}
                                                     <span class="ml-2 text-center bg-emerald-600 rounded">
