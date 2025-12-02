@@ -9,7 +9,8 @@
         @if ($hasRedirect)
             <div class="fixed top-4 right-4 bg-green-600 text-white px-4 py-3 rounded-lg shadow-lg z-50 no-print"
                 x-data="{ show: true }" x-init="setTimeout(() => show = false, 10000)" x-show="show">
-                <a href="https://wa.me/55{{ preg_replace('/\D/', '', Session::get('redirect')) }}?text=Ol%C3%A1,%20gostaria%20de%20informar%20que%20seu%20pedido%20ja%20est%C3%A1%20pronto%20para%20retirada."
+                <a href="https://wa.me/55{{ preg_replace('/\D/', '', Session::get('redirect')) }}?text=Ol%C3%A1%2C%20gostar%C3%ADamos%20de%20informar%20que%20seu%20pedido%20na%20Gr%C3%A1fica%20Espa%C3%A7o%20Facilita%20est%C3%A1%20pronto%20para%20retirada."
+
                     target="_blank" class="text-white">
                     Clique aqui para notificar o cliente que a ordem de serviço está concluída.
                 </a>
