@@ -153,7 +153,6 @@
                                                         </svg>
                                                     </a>
                                                 </span>
-                                                {{-- ! EXEMPLO --}}
                                                 @if (Auth::user()->usertype === 'Caixa' || Auth::user()->usertype === 'Admin')
                                                     {{-- Entregar --}}
                                                     <span class="ml-2 text-center bg-emerald-600 rounded">

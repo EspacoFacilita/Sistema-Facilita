@@ -8,7 +8,6 @@ use App\Models\OrdemDeServico;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
-
 class OrdemDeServicoController extends Controller
 {
     public function index()
@@ -62,11 +61,9 @@ class OrdemDeServicoController extends Controller
                 session()->flash('warning', $msg);
             }
         }
-
         session()->flash('success', 'Ordem de serviço marcada como entregue com sucesso!');
         return redirect()->route('adminOrdemDeServico.concluidas');
     }
-
 
     public function enviar($id, $status)
     {
@@ -82,13 +79,10 @@ class OrdemDeServicoController extends Controller
             $foneLimpo = preg_replace('/\D/', '', $ordem->fone);
             session()->flash('redirect', $foneLimpo);
         }
-
         $ordem->save();
-
         session()->flash('success', 'Ordem de serviço marcada como ' . $status . ' com sucesso!');
         return redirect()->route('adminOrdemDeServico.show', ['id' => $ordem->id]);
     }
-
 
     // Método para listar ordens de serviço concluidas
     public function Impressao()
@@ -96,16 +90,12 @@ class OrdemDeServicoController extends Controller
         $ordemdeservicos = OrdemDeServico::where('status', 'Impressão')
             ->orderBy('id', 'asc')
             ->get();
-
         $ordensVencidas = OrdemDeServico::whereRaw("STR_TO_DATE(CONCAT(data_de_entrega, ' ', hora_de_entrega), '%Y-%m-%d %H:%i:%s') < ?", [now()])
             ->where('status', 'Impressão') // flitra as com status "Impressão"
             ->get();
-
         $total = OrdemDeServico::count();
-
         return view('admin.ordemdeservico.Impressao', compact(['ordemdeservicos', 'total', 'ordensVencidas']));
     }
-
 
     public function laser()
     {
@@ -124,8 +114,6 @@ class OrdemDeServicoController extends Controller
         return view('admin.ordemdeservico.laser', compact(['ordemdeservicos', 'total', 'ordensVencidas']));
     }
 
-
-
     public function producao()
     {
         $ordemdeservicos = OrdemDeServico::where('status', 'Produção')
@@ -140,7 +128,6 @@ class OrdemDeServicoController extends Controller
 
         return view('admin.ordemdeservico.producao', compact(['ordemdeservicos', 'total', 'ordensVencidas']));
     }
-
 
     // Método para listar ordens de serviço concluidas
     public function concluidas()
@@ -181,7 +168,6 @@ class OrdemDeServicoController extends Controller
             $partes = explode('/', $query);
             $diaMesFormatado = "{$partes[1]}-{$partes[0]}"; // Formato mm-dd
         }
-
         // Inicia a consulta base
         $ordens = OrdemDeServico::where(function ($queryBuilder) use ($query, $dataCompletaFormatada, $diaMesFormatado) {
             $queryBuilder->where('cliente', 'like', "%{$query}%")
@@ -189,13 +175,10 @@ class OrdemDeServicoController extends Controller
                 ->orWhere('status', 'like', "%{$query}%")
                 ->orWhere('nome_funcionario', 'like', "%{$query}%")
                 ->orWhere('id', 'like', "%{$query}%"); // Adiciona a busca pelo Cód.Arte (id)
-
-
             // Adiciona o filtro para data completa, se estiver disponível
             if ($dataCompletaFormatada) {
                 $queryBuilder->orWhere('data_de_entrega', 'like', "%{$dataCompletaFormatada}%");
             }
-
             // Adiciona o filtro para dia e mês, se estiver disponível
             if ($diaMesFormatado) {
                 $queryBuilder->orWhereRaw("DATE_FORMAT(data_de_entrega, '%m-%d') = ?", [$diaMesFormatado]);
@@ -226,11 +209,8 @@ class OrdemDeServicoController extends Controller
         } else {
             $ordens = $ordens->whereIn('status', ['Pendente', 'Impressão', 'Produção', 'Laser']);
         }
-
-
         // Aplica a ordenação
         $ordens = $ordens->orderBy('id', 'asc')->get();
-
         // Retorno em formato semelhante ao paginado, mas sem a paginarção real
         return response()->json([
             'data' => $ordens,  // Retorna os dados da ordem
@@ -286,17 +266,14 @@ class OrdemDeServicoController extends Controller
     {
         // Definindo a data de 6 meses atrás
         $sixMonthsAgo = Carbon::now()->subMonths(6);
-
         // Deletando ordens de serviço entregues há 6 meses ou mais
         OrdemDeServico::where('status', 'Entregue')
             ->where('data_de_entrega', '<', $sixMonthsAgo)
             ->delete();
-
         // Redireciona com uma mensagem de sucesso
         session()->flash('success', 'Ordens de serviço entregues há mais de 6 meses foram deletadas.');
         return redirect()->route('adminOrdemDeServico.entregues');
     }
-
 
     public function update(Request $request, $id)
     {
@@ -392,7 +369,6 @@ class OrdemDeServicoController extends Controller
         return redirect(route('adminOrdemDeServico.show', ['id' => $ordemServico->id]));
     }
 
-
     public function store(Request $request)
     {
         $validation = $request->validate([
@@ -434,8 +410,10 @@ class OrdemDeServicoController extends Controller
             $layoutFile = $filename;
         }
 
+        $entradaImpressao = Carbon::now('America/Sao_Paulo')->setSecond(0);
+
         // Criar os dados da ordem de serviço
-        $data = OrdemDeServico::create(array_merge($request->all(), ['layout' => $layoutFile]));
+        $data = OrdemDeServico::create(array_merge($request->all(), ['layout' => $layoutFile, 'entrada_impressao' => $entradaImpressao]));
 
         // Redirecionar com mensagem de sucesso ou erro
         if ($data) {
