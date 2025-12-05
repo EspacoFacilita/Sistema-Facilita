@@ -1,86 +1,106 @@
-## 💼 Sistema Facilita
+# Sistema Facilita
 
-Sistema desenvolvido para a empresa Facilita, com o objetivo de gerenciar ordens de serviço e otimizar o controle interno de produção, entrega e atendimento.
+Sistema interno para gerenciamento de ordens de serviço, produção, entrega e atendimento.
 
-👥 Equipe de Desenvolvimento
+## Tecnologias
 
-2024: Sidarta e Elton
+* Laravel
+* Tailwind CSS
+* Alpine.js
+* MySQL
+* JavaScript
+* WampServer
 
-2025: Guido e Carlos
+## Funcionalidades
 
-⚙️ Tecnologias Utilizadas
+### Ordens de Serviço
 
-Laravel Breeze – estrutura e autenticação
+* Criar, editar, concluir e entregar ordens.
+* Status dinâmicos: Em produção, Concluída, Entregue, Atrasada.
+* Registro automático da data de retirada ao finalizar.
+* Ações adaptadas por tipo de usuário (Caixa, Admin, Design).
+* Mensagens de confirmação e alerta revisadas.
+* Paginação e layout de tabela ajustados.
 
-PHP / Blade / JavaScript / CSS
+### Usuários e Clientes
 
-WampServer – ambiente local de execução
+* CRUD completo de clientes e funcionários.
+* Controle de acesso por perfis.
+* Admin e Design podem cadastrar novos usuários.
 
-🚀 Principais Funcionalidades
-🔧 Ordens de Serviço
+### Calendário
 
-Criação, edição, conclusão e entrega de ordens.
+* Exibe ordens com cores por status.
+* Atualização automática a cada 5 segundos.
+* Oculta fins de semana.
+* Busca por cliente e serviço.
 
-Status dinâmicos (Em produção, Concluída, Entregue, Atrasada).
+### Interface e Usabilidade
 
-Data de retirada registrada automaticamente ao marcar como Entregue.
+* Botão “Hoje” para datas.
+* Máscara para telefone.
+* Impressão otimizada.
+* Textos e mensagens em pt_BR.
 
-Botões e ações ajustados conforme o tipo de usuário (Caixa, Admin, Design).
+## Estrutura do Projeto
 
-Mensagens de sucesso e alerta aprimoradas.
+| Diretório / Arquivo        | Descrição                               |
+| -------------------------- | --------------------------------------- |
+| app/Http/Controllers       | Controladores e autenticação            |
+| app/Http/Middleware        | Permissões (Admin, Design)              |
+| app/Models                 | Modelos                                 |
+| database/factories/seeders | Usuário base (codigo:1, senha:12345678) |
+| database/migrations        | Estrutura das tabelas                   |
+| public/css/public/js       | Estilos e scripts                       |
+| resources/views            | Páginas Blade                           |
+| routes/web.php             | Rotas principais                        |
+| routes/auth.php            | Rotas autenticadas                      |
+| iniciar_wamp.bat           | Inicia o Wamp e o servidor Laravel      |
 
-Paginação e layout refinado das tabelas.
+## Instalação e Configuração
 
-👤 Usuários e Clientes
+1. Clonar o repositório
 
-CRUD completo de clientes e funcionários.
+   ```bash
+   git clone https://github.com/EspacoFacilita/Sistema-Facilita.git
+   cd Sistema-Facilita
+   ```
 
-Controle de acesso por tipo de usuário.
+2. Instalar dependências
 
-Admin e Design podem cadastrar novos usuários.
+   ```bash
+   composer install
+   npm install
+   npm run build
+   ```
 
-🗓️ Calendário de Ordens
+3. Configurar o ambiente
 
-Exibição de ordens com cores por status.
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
 
-Atualização automática a cada 5 segundos.
+   * Ajustar DB_HOST, DB_DATABASE, DB_USERNAME, DB_PASSWORD.
+   * Definir APP_URL e fuso horário.
 
-Oculta finais de semana.
+4. Migrar banco e executar seeders
 
-Pesquisa por cliente e serviço.
+   ```bash
+   php artisan migrate --seed
+   ```
 
-🎨 Interface e Usabilidade
+5. Executar o servidor
 
-Botão “Hoje” para preenchimento rápido de datas.
+   ```bash
+   php artisan serve
+   ```
 
-Máscara para números de telefone.
+   Acessar `http://localhost:8000`.
 
-Ajustes visuais em tabelas, botões e notificações.
+## Créditos
 
-Impressão otimizada (oculta botões e alertas).
-
-Textos e mensagens traduzidos para pt_BR.
-
-🧩 Estrutura do Projeto
-Diretório / Arquivo	Descrição
-App/Http/Controllers	Controladores principais e autenticação
-App/Http/Middleware	Permissões de acesso (Admin, Design)
-App/Models	Modelos e integridade de dados
-database/factories / seeders	Cria usuário base (codigo:1, senha:12345678)
-database/migrations	Estrutura das tabelas do banco
-public/css / public/js	Estilos e scripts (busca, máscaras, etc.)
-resources/views	Páginas e layouts Blade
-routes/web.php	Rotas principais
-routes/auth.php	Rotas protegidas por login
-iniciar_wamp.bat	Inicializa Wamp e executa php artisan serve
-
-▶️ Como Executar o Sistema
-
-Inicie o WampServer
-
-Execute o arquivo:
-
-iniciar_wamp.bat
-
-
-O sistema será aberto automaticamente no navegador.
+* Desenvolvimento: Guido Vidal de Oliveira, Carlos Emanuel Sousa Silva.
+* Supervisão: Hélia, Eduardo.
+* Empresa: Espaço Facilita.
+* Curso: Técnico em Desenvolvimento de Sistemas — EEEP Jeová Costa Lima.
