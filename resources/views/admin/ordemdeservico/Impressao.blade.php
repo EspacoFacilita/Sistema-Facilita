@@ -93,15 +93,14 @@
                                         {{ date('d/m/Y', strtotime($ordemdeservico->data_de_entrega)) }}
                                         {{ $ordemdeservico->hora_de_entrega }}
                                     </td>
-                                    @if ($ordemdeservico->entrada_impressao)
+                                    @if ($ordemdeservico->entrada_impressao_e_laser)
                                         <td class="align-middle text-center border border-gray-300">
-                                            {{ date('d/m/Y', strtotime($ordemdeservico->entrada_impressao)) }}
-                                            {{ date('H:i', strtotime($ordemdeservico->entrada_impressao)) }}
+                                            {{ date('d/m/Y', strtotime($ordemdeservico->entrada_impressao_e_laser)) }}
+                                            {{ date('H:i', strtotime($ordemdeservico->entrada_impressao_e_laser)) }}
                                         </td>
                                     @else
                                         <td class="align-middle text-center border border-gray-300">-</td>
                                     @endif
-
                                     <td class="align-middle border border-gray-300">
                                         <div class="d-flex flex-column align-items-center font-medium">
                                             @php

@@ -38,7 +38,7 @@ class OrdemDeServico extends Model
         'nome_funcionario',
         'data_retirada',
         'entrada_producao',
-        'entrada_impressao',
+        'entrada_impressao_e_laser',
     ];
     protected $dates = [
         'data_retirada',

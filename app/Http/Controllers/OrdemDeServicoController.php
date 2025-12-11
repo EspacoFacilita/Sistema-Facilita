@@ -410,10 +410,10 @@ class OrdemDeServicoController extends Controller
             $layoutFile = $filename;
         }
 
-        $entradaImpressao = Carbon::now('America/Sao_Paulo')->setSecond(0);
+        $entradaImpressaoELaser = Carbon::now('America/Sao_Paulo')->setSecond(0);
 
         // Criar os dados da ordem de serviço
-        $data = OrdemDeServico::create(array_merge($request->all(), ['layout' => $layoutFile, 'entrada_impressao' => $entradaImpressao]));
+        $data = OrdemDeServico::create(array_merge($request->all(), ['layout' => $layoutFile, 'entrada_impressao_e_laser' => $entradaImpressaoELaser]));
 
         // Redirecionar com mensagem de sucesso ou erro
         if ($data) {
