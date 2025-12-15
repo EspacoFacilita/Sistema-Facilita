@@ -10,7 +10,6 @@
             <div class="fixed top-4 right-4 bg-green-600 text-white px-4 py-3 rounded-lg shadow-lg z-50 no-print"
                 x-data="{ show: true }" x-init="setTimeout(() => show = false, 10000)" x-show="show">
                 <a href="https://wa.me/55{{ preg_replace('/\D/', '', Session::get('redirect')) }}?text=Ol%C3%A1%2C%20gostar%C3%ADamos%20de%20informar%20que%20seu%20pedido%20na%20Gr%C3%A1fica%20Espa%C3%A7o%20Facilita%20est%C3%A1%20pronto%20para%20retirada."
-
                     target="_blank" class="text-white">
                     Clique aqui para notificar o cliente que a ordem de serviço está concluída.
                 </a>
@@ -73,11 +72,15 @@
                             @endif
                         @endif
 
-                        <a style="background-color: #DC1C2E;border: 2px solid #DC1C2E;"
-                            href="{{ route('adminOrdemDeServico.destroy', ['id' => $ordemServico->id]) }}"
-                            onclick="return confirm('Você tem certeza que quer Deletar?')"
-                            class="btn btn-primary me-3">Deletar</a>
-
+                        <form action="{{ route('adminOrdemDeServico.destroy', $ordemServico->id) }}" method="POST"
+                            onsubmit="return confirm('Você tem certeza que quer Deletar?')" class="inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" style="background-color:#DC1C2E;border:2px solid #DC1C2E"
+                                class="btn btn-primary me-3">
+                                Deletar
+                            </button>
+                        </form>
 
                         <button style= "background-color: #094081;border: 2px solid #094081;"
                             class="btn btn-primary me-3" onclick="window.print()">Imprimir</button>
@@ -366,8 +369,9 @@
                         </div>
                         <div class="col-10">
                             <h4 class=" d-flex justify-content-center">Serviço autorizado pelo cliente</h4>
-                            <p class="fs-5 d-flex justify-content-center">Declaro ter lido e corrigido meu serviço, tanto textualmente quanto visualmente.
-</p>
+                            <p class="fs-5 d-flex justify-content-center">Declaro ter lido e corrigido meu serviço,
+                                tanto textualmente quanto visualmente.
+                            </p>
                         </div>
                     </div>
                     <div class="col-3 ">

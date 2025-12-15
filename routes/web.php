@@ -36,10 +36,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // routes/Ordens    
     Route::get('/admin/ordemdeservico/create', [OrdemDeServicoController::class, 'create'])->name('adminOrdemDeServico.create');
     Route::post('/admin/ordemdeservico/', [OrdemDeServicoController::class, 'store'])->name('adminOrdemDeServico.store');
-    Route::get('/admin/ordemdeservico{id}', [OrdemDeServicoController::class, 'show'])->name('adminOrdemDeServico.show');
+    Route::get('/admin/ordemdeservico/{id}', [OrdemDeServicoController::class, 'show'])->name('adminOrdemDeServico.show');
     Route::get('/admin/ordemdeservico/edit/{id}', [OrdemDeServicoController::class, 'edit'])->name('adminOrdemDeServico.edit');
     Route::put('/admin/ordemdeservico/{id}', [OrdemDeServicoController::class, 'update'])->name('adminOrdemDeServico.update');
-    Route::get('/admin/ordemdeservico/{id}', [OrdemDeServicoController::class, 'destroy'])->name('adminOrdemDeServico.destroy');
+    Route::delete('/admin/ordemdeservico/{id}', [OrdemDeServicoController::class, 'destroy'])
+        ->name('adminOrdemDeServico.destroy');
     Route::get('/admin/ordemdeservico/enviar/{id}/{status}', [OrdemDeServicoController::class, 'enviar'])->name('adminOrdemDeServico.enviar');
     Route::get('/admin/ordemdeservico/{id}/entregar', [OrdemDeServicoController::class, 'entregar'])->name('adminOrdemDeServico.entregar'); // Adicionada
 
@@ -55,7 +56,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/funcionario', [FuncionarioController::class, 'index'])->name('adminFuncionario.home');
     Route::get('/admin/funcionario/edit/{id}', [FuncionarioController::class, 'edit'])->name('adminFuncionario.edit');
     Route::put('/admin/funcionario/{id}', [FuncionarioController::class, 'update'])->name('adminFuncionario.update');
-    Route::get('/admin/funcionario/{id}', [FuncionarioController::class, 'destroy'])->name('adminFuncionario.destroy');
+    Route::delete('/admin/funcionario/{id}', [FuncionarioController::class, 'destroy'])->name('adminFuncionario.destroy');
 });
 
 require __DIR__ . '/auth.php';
