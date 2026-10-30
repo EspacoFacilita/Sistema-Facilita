@@ -60,6 +60,22 @@ document.addEventListener("DOMContentLoaded", () => {
                         const usaNovoLayout =
                             page === "producao" &&
                             (userType === "Admin" || userType === "Caixa");
+                        const csrfToken =
+                            document
+                                .querySelector('meta[name="csrf-token"]')
+                                ?.getAttribute("content") ?? "";
+                        const acaoEntrega =
+                            Number(ordem.funcionarios_count) > 0
+                                ? `<form action="/admin/ordemdeservico/${ordem.id}/entregar" method="POST">
+                                    <input type="hidden" name="_token" value="${csrfToken}">
+                                    <button type="submit" class="px-3 py-2 rounded bg-emerald-600 text-white">
+                                        Entregar
+                                    </button>
+                                </form>`
+                                : `<a href="/admin/ordemdeservico/${ordem.id}/entregar"
+                                    class="px-3 py-2 rounded bg-emerald-600 text-white">
+                                        Entregar
+                                </a>`;
 
                         const actionsNovo = `
                             <td class="align-middle text-center border border-gray-300">
@@ -104,11 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                                     ${
                                         podeEntregar
-                                            ? `<a href="/admin/ordemdeservico/${ordem.id}/entregar"
-                                                onclick="return confirm('Você tem certeza que quer passar para entregue?')"
-                                                class="px-3 py-2 rounded bg-emerald-600 text-white">
-                                                    Entregar
-                                            </a>`
+                                            ? acaoEntrega
                                             : ""
                                     }
                                 </div>
@@ -158,11 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                                     ${
                                         podeEntregar
-                                            ? `<span class="ml-2 bg-emerald-600 rounded">
-                                                <a href="/admin/ordemdeservico/${ordem.id}/entregar"
-                                                    onclick="return confirm('Você tem certeza que quer passar para entregue?')"
-                                                    class="btn text-white">Entregar</a>
-                                            </span>`
+                                            ? `<span class="ml-2 bg-emerald-600 rounded">${acaoEntrega}</span>`
                                             : ""
                                     }
                                 </div>

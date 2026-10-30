@@ -77,7 +77,7 @@
                                                     {{ $ordemServico->status === 'Laser' ? 'selected' : '' }}>Laser
                                                 </option>
                                             @endif
-                                            @if (in_array($userType, ['Impressão', 'Produção', 'Caixa', 'Admin', 'Design']))
+                                            @if ($ordemServico->status === 'Concluido')
                                                 <option value="Concluido"
                                                     {{ $ordemServico->status === 'Concluido' ? 'selected' : '' }}>
                                                     Concluído</option>

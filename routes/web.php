@@ -5,6 +5,7 @@ use App\Http\Controllers\OrdemDeServicoController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\FuncionarioController;
 use App\Http\Controllers\CalendarioController;
+use App\Http\Controllers\CommissionReportController;
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
@@ -42,7 +43,20 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/admin/ordemdeservico/{id}', [OrdemDeServicoController::class, 'destroy'])
         ->name('adminOrdemDeServico.destroy');
     Route::get('/admin/ordemdeservico/enviar/{id}/{status}', [OrdemDeServicoController::class, 'enviar'])->name('adminOrdemDeServico.enviar');
-    Route::get('/admin/ordemdeservico/{id}/entregar', [OrdemDeServicoController::class, 'entregar'])->name('adminOrdemDeServico.entregar'); // Adicionada
+    Route::get('/admin/ordemdeservico/{id}/entregar', [OrdemDeServicoController::class, 'formularioEntrega'])
+        ->name('adminOrdemDeServico.entregar.form');
+    Route::post('/admin/ordemdeservico/{id}/entregar', [OrdemDeServicoController::class, 'entregar'])
+        ->name('adminOrdemDeServico.entregar');
+    Route::get('/admin/ordemdeservico/{id}/concluir', [OrdemDeServicoController::class, 'formularioConclusao'])
+        ->name('adminOrdemDeServico.concluir.form');
+    Route::post('/admin/ordemdeservico/{id}/concluir', [OrdemDeServicoController::class, 'concluir'])
+        ->name('adminOrdemDeServico.concluir');
+    Route::get('/admin/ordemdeservico/{id}/funcionarios', [OrdemDeServicoController::class, 'formularioEditarFuncionarios'])
+        ->name('adminOrdemDeServico.funcionarios.edit');
+    Route::put('/admin/ordemdeservico/{id}/funcionarios', [OrdemDeServicoController::class, 'atualizarFuncionarios'])
+        ->name('adminOrdemDeServico.funcionarios.update');
+    Route::get('/admin/relatorios/comissoes', [CommissionReportController::class, 'index'])
+        ->name('adminComissoes.index');
 
 
     // Rota para deletar ordens entregues antigas

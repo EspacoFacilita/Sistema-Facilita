@@ -4,6 +4,11 @@
         @php
             $hasRedirect = Session::has('redirect');
             $hasSuccess = Session::has('success');
+            $funcionariosExibidos = in_array($ordemServico->status, ['Concluido', 'Entregue'], true)
+                ? ($ordemServico->funcionarios->isNotEmpty()
+                    ? $ordemServico->funcionarios->pluck('name')->join(', ')
+                    : $ordemServico->nome_funcionario)
+                : '';
         @endphp
 
         @if ($hasRedirect)
@@ -55,6 +60,13 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-between d-flex align-items-center">
+                        @if (in_array($ordemServico->status, ['Concluido', 'Entregue'], true) &&
+                                in_array(Auth::user()->usertype, ['Caixa', 'Admin', 'Produção'], true))
+                            <span class="text-center bg-blue-600 rounded me-2 no-print">
+                                <a href="{{ route('adminOrdemDeServico.funcionarios.edit', $ordemServico->id) }}"
+                                    class="mx-1 d-flex align-items-center btn text-white">Alterar funcionários</a>
+                            </span>
+                        @endif
                         @if ($ordemServico->status === 'Impressão' || $ordemServico->status === 'Laser')
                             <span class="text-center  bg-blue-600 rounded me-2">
                                 <a href="{{ route('adminOrdemDeServico.enviar', ['id' => $ordemServico->id, 'status' => 'Produção']) }}"
@@ -65,8 +77,7 @@
                         @if (Auth::user()->usertype === 'Caixa' || Auth::user()->usertype === 'Admin' || Auth::user()->usertype === 'Produção')
                             @if ($ordemServico->status !== 'Concluido' && $ordemServico->status !== 'Entregue')
                                 <span class="ml-2 text-center  bg-emerald-600 rounded me-3">
-                                    <a href="{{ route('adminOrdemDeServico.enviar', ['id' => $ordemServico->id, 'status' => 'Concluido']) }}"
-                                        onclick="return confirm('Você deseja transferir para a aba de Concluído?')"
+                                    <a href="{{ route('adminOrdemDeServico.concluir.form', $ordemServico->id) }}"
                                         class="mx-1 d-flex align-items-center btn  text-white">Concluído</a>
                                 </span>
                             @endif
@@ -253,8 +264,8 @@
                         </div>
                         <div style="border: 2px solid #D80707;" class="col-12 row d-flex justify-content-evenly  ">
                             <h5 style="background-color: #D80707;"
-                                class="col-12 d-flex justify-content-center text-white align-items-center">FORMAS
-                                DE PAGAMENTO SERVIÇO EXTERNO</h5>
+                                class="col-12 d-flex justify-content-center text-white align-items-center">FORMA
+                                DE PAGAMENTO</h5>
                             <div class=" d-flex justify-content-evenly">
                                 <div class="d-flex flex-column">
                                     <div class="form-check form-check-inline">
@@ -305,6 +316,17 @@
                                     </div>
                                 </div>
                             </div>
+                            @if (in_array($ordemServico->status, ['Concluido', 'Entregue'], true))
+                                <div class="col-12 row d-flex justify-content-evenly p-0 ">
+                                    <h5 style="background-color: #094081;"
+                                        class="d-flex justify-content-center text-white align-items-center mb-2">
+                                        FUNCIONÁRIO(S) RESPONSÁVEL(IS)
+                                    </h5>
+                                    <p class="fs-5 m-0 text-center">
+                                        {{ $funcionariosExibidos }}
+                                    </p>
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="p-0">
@@ -374,11 +396,6 @@
                             </p>
                         </div>
                     </div>
-                    <div class="col-3 ">
-                        <p class="fs-5 m-0 border-bottom border-dark  col-12 d-flex justify-content-center">
-                            {{ $ordemServico->nome_funcionario }}</p>
-                        <h4 class=" d-flex justify-content-center">Funcionario(a)</h4>
-                    </div>
                 </div>
                 <div class="col-12 d-flex align-items-center border border-black px-2 ">
                     <div class="d-flex flex-column col-8 mb-3">
@@ -440,7 +457,8 @@
                         <div class="d-flex flex-column ">
                             <div>
                                 <p class="fs-5 m-0 border-bottom border-dark  col-12 d-flex justify-content-center">
-                                    {{ $ordemServico->nome_funcionario }}</p>
+                                    {{ $funcionariosExibidos }}
+                                </p>
                             </div>
                             <div class="d-flex justify-content-center">
                                 <p class="fs-5">Funcionario(a)</p>
