@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable
 {
@@ -38,5 +39,12 @@ class User extends Authenticatable
         return [
             'password' => 'hashed',
         ];
+    }
+
+    public function ordensDeServico(): BelongsToMany
+    {
+        return $this->belongsToMany(OrdemDeServico::class, 'ordem_de_servico_user')
+            ->withPivot('percentual')
+            ->withTimestamps();
     }
 }

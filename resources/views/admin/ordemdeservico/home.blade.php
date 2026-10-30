@@ -155,9 +155,17 @@
                                                     </span>
                                                     @if (Auth::user()->usertype === 'Caixa')
                                                         <span class="ml-2 text-center bg-emerald-600 rounded">
-                                                            <a href="{{ route('adminOrdemDeServico.entregar', $ordemdeservico->id) }}"
-                                                                onclick="return confirm('Você tem certeza que quer passar para entregue?')"
-                                                                class="mx-1 d-flex align-items-center btn text-white">Entregar</a>
+                                                            @if ($ordemdeservico->funcionarios_count > 0)
+                                                                <form action="{{ route('adminOrdemDeServico.entregar', $ordemdeservico->id) }}"
+                                                                    method="POST">
+                                                                    @csrf
+                                                                    <button type="submit"
+                                                                        class="mx-1 d-flex align-items-center btn text-white">Entregar</button>
+                                                                </form>
+                                                            @else
+                                                                <a href="{{ route('adminOrdemDeServico.entregar.form', $ordemdeservico->id) }}"
+                                                                    class="mx-1 d-flex align-items-center btn text-white">Entregar</a>
+                                                            @endif
                                                         </span>
                                                     @endif
                                                 </div>

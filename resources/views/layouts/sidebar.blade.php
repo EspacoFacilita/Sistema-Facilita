@@ -4,6 +4,7 @@
     $agendaAtivo =
         request()->routeIs('adminOrdemDeServico.calendario') || request()->routeIs('adminOrdemDeServico.calendario.*');
     $funcAtivo = request()->routeIs('adminFuncionario.*');
+    $comissoesAtivo = request()->routeIs('adminComissoes.*');
     $statusImpressao = DB::table('ordem_de_servicos')->where('status', 'Impressão')->count();
     $statusLaser = DB::table('ordem_de_servicos')->where('status', 'Laser')->count();
     $statusProducao = DB::table('ordem_de_servicos')->where('status', 'Produção')->count();
@@ -139,7 +140,7 @@
 
             <li>
                 <a href="{{ route('adminOrdemDeServico.calendario') }}"
-                    class="flex items-center gap-1.5 no-underline px-6 py-2 mt-1.5 rounded transition-colors 
+                    class="flex items-center gap-1.5 no-underline px-6 py-2 mt-1.5 rounded transition-colors
                     {{ $agendaAtivo ? 'bg-blue-600 text-white' : 'text-white hover:text-gray-300 hover:bg-gray-800' }}">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
                         stroke="currentColor" class="size-6">
@@ -162,6 +163,20 @@
                     Clientes
                 </a>
             </li>
+                @if (Auth::id() === 6)
+                    <li>
+                        <a href="{{ route('adminComissoes.index') }}"
+                            class="flex items-center gap-1.5 no-underline px-6 py-2 mt-1.5 rounded transition-colors
+                        {{ $comissoesAtivo ? 'bg-blue-600 text-white' : 'text-white hover:text-gray-300 hover:bg-gray-800' }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
+                                stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M3 3v18h18M18 17V9m-5 8V5m-5 12v-5" />
+                            </svg>
+                            Comissões
+                        </a>
+                    </li>
+                @endif
         </ul>
     </nav>
 

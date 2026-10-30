@@ -3,16 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\OrdemDeServico;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 class OrdemDeServicoController extends Controller
 {
     public function index()
     {
         $ordemdeservicos = OrdemDeServico::whereIn('status', ['Pendente', 'Impressão', 'Laser', 'Produção'])
+            ->withCount('funcionarios')
             ->orderBy('id', 'asc')
             ->get();
 
@@ -39,34 +42,83 @@ class OrdemDeServicoController extends Controller
         ));
     }
 
-    public function entregar($id)
+    public function formularioEntrega($id)
     {
+        abort_unless(in_array(auth()->user()->usertype, ['Caixa', 'Admin', 'Produção'], true), 403);
+
+        $ordemServico = OrdemDeServico::with('funcionarios')->findOrFail($id);
+        abort_if($ordemServico->status === 'Entregue', 409, 'Esta ordem de serviço já foi entregue.');
+
+        $funcionarios = $this->funcionariosParaSelecao();
+
+        return view('admin.ordemdeservico.entregar', compact('ordemServico', 'funcionarios'));
+    }
+
+    public function entregar(Request $request, $id)
+    {
+        abort_unless(in_array(auth()->user()->usertype, ['Caixa', 'Admin', 'Produção'], true), 403);
+
+        $validated = $request->validate([
+            'funcionarios' => ['sometimes', 'array', 'min:1'],
+            'funcionarios.*' => ['required', 'integer', 'distinct', 'exists:users,id'],
+        ]);
+
+        $funcionarioIds = isset($validated['funcionarios'])
+            ? array_map('intval', $validated['funcionarios'])
+            : null;
+        $dataAtual = Carbon::now('America/Sao_Paulo')->setSecond(0);
+
+        DB::transaction(function () use ($id, $funcionarioIds, $dataAtual) {
+            $ordem = OrdemDeServico::whereKey($id)->lockForUpdate()->firstOrFail();
+            abort_if($ordem->status === 'Entregue', 409, 'Esta ordem de serviço já foi entregue.');
+
+            $funcionariosAtuais = $ordem->funcionarios()->pluck('users.id')->all();
+            $idsParaEntrega = $funcionarioIds ?? $funcionariosAtuais;
+
+            if ($idsParaEntrega === []) {
+                throw ValidationException::withMessages([
+                    'funcionarios' => 'Selecione pelo menos um funcionário antes de entregar esta ordem.',
+                ]);
+            }
+
+            $ordem->status = 'Entregue';
+            $ordem->data_retirada = $dataAtual;
+            $ordem->data_conclusao ??= $dataAtual;
+            $ordem->save();
+
+            if ($funcionarioIds !== null) {
+                $ordem->funcionarios()->sync($this->participacoesPara($idsParaEntrega));
+            }
+        });
+
         $ordem = OrdemDeServico::findOrFail($id);
 
-        // Entrega a ordem atual
-        $ordem->status = 'Entregue';
-        $ordem->data_retirada = Carbon::now('America/Sao_Paulo')->setSecond(0);
-        $ordem->save();
-
-        // Só verifica se houver cliente
         if ($ordem->cliente_id) {
             $outrasOrdens = OrdemDeServico::where('cliente_id', $ordem->cliente_id)
                 ->where('status', 'Concluido')
                 ->where('id', '!=', $ordem->id)
                 ->get();
 
-            if ($outrasOrdens->count() > 0) {
-                $msg = 'Existem outras ordens concluídas desse cliente para entrega! CÓD.Arte: ' .
-                    $outrasOrdens->pluck('id')->join(', ');
-                session()->flash('warning', $msg);
+            if ($outrasOrdens->isNotEmpty()) {
+                session()->flash(
+                    'warning',
+                    'Existem outras ordens concluídas desse cliente para entrega! CÓD.Arte: ' .
+                        $outrasOrdens->pluck('id')->join(', ')
+                );
             }
         }
-        session()->flash('success', 'Ordem de serviço marcada como entregue com sucesso!');
-        return redirect()->route('adminOrdemDeServico.concluidas');
+
+        session()->flash('success', 'Ordem entregue e participações registradas com sucesso!');
+
+        return redirect()->route('adminOrdemDeServico.show', ['id' => $ordem->id]);
     }
 
     public function enviar($id, $status)
     {
+        if ($status === 'Concluido') {
+            return redirect()->route('adminOrdemDeServico.concluir.form', $id);
+        }
+
         $ordem = OrdemDeServico::findOrFail($id);
 
         $ordem->status = $status;
@@ -75,13 +127,124 @@ class OrdemDeServicoController extends Controller
             $ordem->entrada_producao = Carbon::now('America/Sao_Paulo')->setSecond(0);
         }
 
-        if ($status === 'Concluido') {
-            $foneLimpo = preg_replace('/\D/', '', $ordem->fone);
-            session()->flash('redirect', $foneLimpo);
-        }
         $ordem->save();
         session()->flash('success', 'Ordem de serviço marcada como ' . $status . ' com sucesso!');
         return redirect()->route('adminOrdemDeServico.show', ['id' => $ordem->id]);
+    }
+
+    public function formularioConclusao($id)
+    {
+        abort_unless(in_array(auth()->user()->usertype, ['Caixa', 'Admin', 'Produção'], true), 403);
+
+        $ordemServico = OrdemDeServico::findOrFail($id);
+
+        abort_if(in_array($ordemServico->status, ['Concluido', 'Entregue'], true), 409, 'Esta ordem de serviço já foi concluída.');
+
+        $funcionarios = $this->funcionariosParaSelecao();
+
+        return view('admin.ordemdeservico.concluir', compact('ordemServico', 'funcionarios'));
+    }
+
+    public function concluir(Request $request, $id)
+    {
+        abort_unless(in_array(auth()->user()->usertype, ['Caixa', 'Admin', 'Produção'], true), 403);
+
+        $validated = $request->validate([
+            'funcionarios' => ['required', 'array', 'min:1'],
+            'funcionarios.*' => ['required', 'integer', 'distinct', 'exists:users,id'],
+        ]);
+
+        $participacoes = $this->participacoesPara(array_map('intval', $validated['funcionarios']));
+
+        DB::transaction(function () use ($id, $participacoes) {
+            $ordemServico = OrdemDeServico::whereKey($id)->lockForUpdate()->firstOrFail();
+
+            abort_if(
+                in_array($ordemServico->status, ['Concluido', 'Entregue'], true),
+                409,
+                'Esta ordem de serviço já foi concluída.'
+            );
+
+            $ordemServico->status = 'Concluido';
+            $ordemServico->data_conclusao = Carbon::now('America/Sao_Paulo');
+            $ordemServico->save();
+            $ordemServico->funcionarios()->sync($participacoes);
+        });
+
+        $ordemServico = OrdemDeServico::findOrFail($id);
+        session()->flash('success', 'Ordem de serviço concluída e participações registradas com sucesso!');
+        session()->flash('redirect', preg_replace('/\D/', '', $ordemServico->fone));
+
+        return redirect()->route('adminOrdemDeServico.show', ['id' => $ordemServico->id]);
+    }
+
+    public function formularioEditarFuncionarios($id)
+    {
+        abort_unless(in_array(auth()->user()->usertype, ['Caixa', 'Admin', 'Produção'], true), 403);
+
+        $ordemServico = OrdemDeServico::with('funcionarios')->findOrFail($id);
+        abort_unless(in_array($ordemServico->status, ['Concluido', 'Entregue'], true), 409);
+
+        $funcionarios = $this->funcionariosParaSelecao();
+        $modoEdicao = true;
+
+        return view('admin.ordemdeservico.concluir', compact('ordemServico', 'funcionarios', 'modoEdicao'));
+    }
+
+    public function atualizarFuncionarios(Request $request, $id)
+    {
+        abort_unless(in_array(auth()->user()->usertype, ['Caixa', 'Admin', 'Produção'], true), 403);
+
+        $validated = $request->validate([
+            'funcionarios' => ['required', 'array', 'min:1'],
+            'funcionarios.*' => ['required', 'integer', 'distinct', 'exists:users,id'],
+        ]);
+
+        $participacoes = $this->participacoesPara(array_map('intval', $validated['funcionarios']));
+
+        DB::transaction(function () use ($id, $participacoes) {
+            $ordemServico = OrdemDeServico::whereKey($id)->lockForUpdate()->firstOrFail();
+            abort_unless(in_array($ordemServico->status, ['Concluido', 'Entregue'], true), 409);
+
+            if ($ordemServico->status === 'Entregue' && !$ordemServico->data_conclusao) {
+                $ordemServico->data_conclusao = $ordemServico->data_retirada
+                    ?? Carbon::now('America/Sao_Paulo');
+                $ordemServico->save();
+            }
+
+            $ordemServico->funcionarios()->sync($participacoes);
+        });
+
+        return redirect()
+            ->route('adminOrdemDeServico.show', ['id' => $id])
+            ->with('success', 'Funcionários e participações atualizados com sucesso.');
+    }
+
+    private function participacoesPara(array $funcionarioIds): array
+    {
+        $quantidade = count($funcionarioIds);
+        $percentualBase = round(100 / $quantidade, 6);
+        $participacoes = [];
+
+        foreach ($funcionarioIds as $indice => $funcionarioId) {
+            $percentual = $indice === $quantidade - 1
+                ? 100 - ($percentualBase * ($quantidade - 1))
+                : $percentualBase;
+
+            $participacoes[$funcionarioId] = [
+                'percentual' => number_format($percentual, 6, '.', ''),
+            ];
+        }
+
+        return $participacoes;
+    }
+
+    private function funcionariosParaSelecao()
+    {
+        return User::query()
+            ->orderByRaw('CASE id WHEN 32 THEN 0 WHEN 34 THEN 1 WHEN 33 THEN 2 ELSE 3 END')
+            ->orderBy('id')
+            ->get();
     }
 
     // Método para listar ordens de serviço concluidas
@@ -117,6 +280,7 @@ class OrdemDeServicoController extends Controller
     public function producao()
     {
         $ordemdeservicos = OrdemDeServico::where('status', 'Produção')
+            ->withCount('funcionarios')
             ->orderBy('id', 'asc')
             ->get();
 
@@ -133,6 +297,7 @@ class OrdemDeServicoController extends Controller
     public function concluidas()
     {
         $ordemdeservicos = OrdemDeServico::where('status', 'Concluido')
+            ->withCount('funcionarios')
             ->orderBy('id', 'asc')
             ->get();
         $total = OrdemDeServico::count();
@@ -210,7 +375,7 @@ class OrdemDeServicoController extends Controller
             $ordens = $ordens->whereIn('status', ['Pendente', 'Impressão', 'Produção', 'Laser']);
         }
         // Aplica a ordenação
-        $ordens = $ordens->orderBy('id', 'asc')->get();
+        $ordens = $ordens->withCount('funcionarios')->orderBy('id', 'asc')->get();
         // Retorno em formato semelhante ao paginado, mas sem a paginarção real
         return response()->json([
             'data' => $ordens,  // Retorna os dados da ordem
@@ -234,7 +399,7 @@ class OrdemDeServicoController extends Controller
 
     public function show($id)
     {
-        $ordemServico = OrdemDeServico::findOrFail($id);
+        $ordemServico = OrdemDeServico::with('funcionarios')->findOrFail($id);
         return view('admin.ordemdeservico.show', compact('ordemServico'));
     }
 
@@ -305,6 +470,12 @@ class OrdemDeServicoController extends Controller
 
         $ordemServico = OrdemDeServico::findOrFail($id);
 
+        if ($request->status === 'Concluido' && $ordemServico->status !== 'Concluido') {
+            return redirect()
+                ->route('adminOrdemDeServico.concluir.form', $ordemServico->id)
+                ->with('warning', 'Selecione os funcionários responsáveis para concluir esta ordem.');
+        }
+
         // Atualiza os outros campos
         $ordemServico->status = $request->status;
         $ordemServico->ORC_venda = $request->ORC_venda;
@@ -372,7 +543,7 @@ class OrdemDeServicoController extends Controller
     public function store(Request $request)
     {
         $validation = $request->validate([
-            'status' => 'required|in:Pendente,Impressão,Laser,Produção,Concluido,Entregue',
+            'status' => 'required|in:Pendente,Impressão,Laser,Produção',
             'ORC_venda'  => 'nullable',
             'cliente'  => 'required',
             'cliente_id' => 'nullable|exists:clientes,id',

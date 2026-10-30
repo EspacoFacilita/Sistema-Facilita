@@ -55,16 +55,6 @@
                                                 {{ old('status') === 'Produção' ? 'selected' : '' }}>Produção
                                             </option>
                                         @endif
-                                        @if (in_array($userType, ['Impressão', 'Produção', 'Caixa', 'Admin', 'Design']))
-                                            <option value="Concluido"
-                                                {{ old('status') === 'Concluido' ? 'selected' : '' }}>Concluído
-                                            </option>
-                                        @endif
-                                        @if (in_array($userType, ['Caixa', 'Admin', 'Design']))
-                                            <option value="Entregue"
-                                                {{ old('status') === 'Entregue' ? 'selected' : '' }}>Entregue
-                                            </option>
-                                        @endif
                                     </select>
                                 </div>
                             </div>

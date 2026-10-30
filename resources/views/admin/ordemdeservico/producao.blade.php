@@ -181,11 +181,21 @@
                                                     </svg>
                                                 </a>
                                                 {{-- Entregar --}}
-                                                <a href="{{ route('adminOrdemDeServico.entregar', $ordemdeservico->id) }}"
-                                                    onclick="return confirm('Você tem certeza que quer passar para entregue?')"
-                                                    class="px-3 py-2 rounded bg-emerald-600 text-white hover:bg-emerald-700">
-                                                    Entregar
-                                                </a>
+                                                @if ($ordemdeservico->funcionarios_count > 0)
+                                                    <form action="{{ route('adminOrdemDeServico.entregar', $ordemdeservico->id) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        <button type="submit"
+                                                            class="px-3 py-2 rounded bg-emerald-600 text-white hover:bg-emerald-700">
+                                                            Entregar
+                                                        </button>
+                                                    </form>
+                                                @else
+                                                    <a href="{{ route('adminOrdemDeServico.entregar.form', $ordemdeservico->id) }}"
+                                                        class="px-3 py-2 rounded bg-emerald-600 text-white hover:bg-emerald-700">
+                                                        Entregar
+                                                    </a>
+                                                @endif
                                             </div>
                                         </td>
                                     @else

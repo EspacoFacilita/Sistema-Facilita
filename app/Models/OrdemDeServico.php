@@ -4,8 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Carbon\Carbon;
-
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class OrdemDeServico extends Model
 {
@@ -45,5 +44,13 @@ class OrdemDeServico extends Model
     ];
     protected $casts = [
         'data_retirada' => 'datetime',
+        'data_conclusao' => 'datetime',
     ];
+
+    public function funcionarios(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'ordem_de_servico_user')
+            ->withPivot('percentual')
+            ->withTimestamps();
+    }
 }
