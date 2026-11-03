@@ -130,7 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             <td class="align-middle text-center">
                                 <div class="btn-group" role="group">
                                     <span class="mr-2 bg-gray-700 rounded">
-                                        <a href="/admin/ordemdeservico${
+                                        <a href="/admin/ordemdeservico/${
                                             ordem.id
                                         }" class="btn text-white"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -143,7 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                     </span>
 
                                     <span>
-                                        <a href="/admin/ordemdeservico${
+                                        <a href="/admin/ordemdeservico/${
                                             ordem.id
                                         }?print=1"
                                         class="btn bg-black text-white"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
