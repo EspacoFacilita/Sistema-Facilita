@@ -317,10 +317,10 @@
                                 </div>
                             </div>
                             @if (in_array($ordemServico->status, ['Concluido', 'Entregue'], true))
-                                <div class="col-12 row d-flex justify-content-evenly p-0 ">
+                                <div style="border: 2px solid #094081" class=" col-12 row d-flex justify-content-evenly p-0 ">
                                     <h5 style="background-color: #094081;"
                                         class="d-flex justify-content-center text-white align-items-center mb-2">
-                                        FUNCIONÁRIO(S) RESPONSÁVEL(IS)
+                                        CONCLUÍDO POR:
                                     </h5>
                                     <p class="fs-5 m-0 text-center">
                                         {{ $funcionariosExibidos }}
@@ -396,6 +396,11 @@
                             </p>
                         </div>
                     </div>
+                     <div class="col-3 ">
+                        <p class="fs-5 m-0 border-bottom border-dark  col-12 d-flex justify-content-center">
+                            {{ $ordemServico->nome_funcionario }}</p>
+                        <h4 class=" d-flex justify-content-center">Funcionario(a)</h4>
+                    </div>
                 </div>
                 <div class="col-12 d-flex align-items-center border border-black px-2 ">
                     <div class="d-flex flex-column col-8 mb-3">
@@ -457,7 +462,7 @@
                         <div class="d-flex flex-column ">
                             <div>
                                 <p class="fs-5 m-0 border-bottom border-dark  col-12 d-flex justify-content-center">
-                                    {{ $funcionariosExibidos }}
+                                    {{ $ordemServico->nome_funcionario }}
                                 </p>
                             </div>
                             <div class="d-flex justify-content-center">
