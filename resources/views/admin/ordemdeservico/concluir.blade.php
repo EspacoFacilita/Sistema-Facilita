@@ -50,7 +50,6 @@
                                         value="{{ $funcionario->id }}"
                                         @checked(in_array($funcionario->id, $funcionariosSelecionados))>
                                     <span>{{ $funcionario->name }}</span>
-                                    <span class="ms-auto text-sm text-blue-700">Destaque</span>
                                 </label>
                             </div>
                         @endforeach
