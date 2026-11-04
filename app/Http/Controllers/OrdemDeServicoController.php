@@ -180,7 +180,7 @@ class OrdemDeServicoController extends Controller
 
     public function formularioEditarFuncionarios($id)
     {
-        abort_unless(in_array(auth()->user()->usertype, ['Caixa', 'Admin', 'Produção'], true), 403);
+        abort_unless((int) auth()->id() === 6, 403);
 
         $ordemServico = OrdemDeServico::with('funcionarios')->findOrFail($id);
         abort_unless(in_array($ordemServico->status, ['Concluido', 'Entregue'], true), 409);
@@ -193,7 +193,7 @@ class OrdemDeServicoController extends Controller
 
     public function atualizarFuncionarios(Request $request, $id)
     {
-        abort_unless(in_array(auth()->user()->usertype, ['Caixa', 'Admin', 'Produção'], true), 403);
+        abort_unless((int) auth()->id() === 6, 403);
 
         $validated = $request->validate([
             'funcionarios' => ['required', 'array', 'min:1'],

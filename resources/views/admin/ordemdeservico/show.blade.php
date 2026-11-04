@@ -60,8 +60,8 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-between d-flex align-items-center">
-                        @if (in_array($ordemServico->status, ['Concluido', 'Entregue'], true) &&
-                                in_array(Auth::user()->usertype, ['Caixa', 'Admin', 'Produção'], true))
+                        @if (Auth::id() === 6 &&
+                                in_array($ordemServico->status, ['Concluido', 'Entregue'], true))
                             <span class="text-center bg-blue-600 rounded me-2 no-print">
                                 <a href="{{ route('adminOrdemDeServico.funcionarios.edit', $ordemServico->id) }}"
                                     class="mx-1 d-flex align-items-center btn text-white">Alterar funcionários</a>

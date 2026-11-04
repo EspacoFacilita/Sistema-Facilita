@@ -37,7 +37,7 @@
                     @else
                         <h2 class="mb-2 text-lg font-semibold">Acesso rápido</h2>
                         <div class="row g-2 mb-4">
-                            @foreach ($funcionarios->take(5) as $funcionario)
+                            @foreach ($funcionarios->take(3) as $funcionario)
                                 <div class="col-12 col-md-6 col-lg-4">
                                     <label class="flex items-center gap-2 rounded border border-blue-300 bg-blue-50 p-3">
                                         <input class="form-check-input" type="checkbox" name="funcionarios[]"
@@ -49,10 +49,10 @@
                             @endforeach
                         </div>
 
-                        @if ($funcionarios->count() > 5)
+                        @if ($funcionarios->count() > 3)
                             <h2 class="mb-2 text-lg font-semibold">Outros</h2>
                             <div class="row g-2 mb-4">
-                                @foreach ($funcionarios->slice(5) as $funcionario)
+                                @foreach ($funcionarios->slice(3) as $funcionario)
                                     <div class="col-12 col-md-6 col-lg-4">
                                         <label class="flex items-center gap-2 rounded border border-gray-300 p-3">
                                             <input class="form-check-input" type="checkbox" name="funcionarios[]"
